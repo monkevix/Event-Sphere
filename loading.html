@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="refresh" content="3;url=index.html">
+    <title>EventSphere | Loading</title>
+    <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Karla:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Unbounded:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+  (function () {
+    try {
+      var t = null;
+      try { t = localStorage.getItem("eventsphere_theme"); } catch (e) {}
+      if (!t) { try { var m = window.name.match(/(?:^|;)eventsphere_theme=([^;]+)/); if (m) t = m[1]; } catch (e2) {} }
+      if (t === "light") document.documentElement.classList.add("light-mode");
+    } catch (e) {}
+  })();
+</script>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body class="loading-page">
+    <div class="loading-container">
+        <div class="loading-logo">
+            <svg viewBox="0 0 40 40" width="48" height="48" aria-hidden="true">
+                <circle cx="20" cy="20" r="7" fill="url(#logoGradient)"/>
+                <ellipse cx="20" cy="20" rx="18" ry="7" fill="none" stroke="url(#logoGradient)" stroke-width="2"/>
+                <defs>
+                    <linearGradient id="logoGradient" x1="0" y1="0" x2="40" y2="40">
+                        <stop offset="0%" stop-color="#f59e0b"/>
+                        <stop offset="100%" stop-color="#ec4899"/>
+                    </linearGradient>
+                </defs>
+            </svg>
+            <span class="loading-logo-text">EventSphere</span>
+        </div>
+
+        <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Loading progress">
+            <div class="progress-fill"></div>
+        </div>
+
+        <p class="loading-text">Loading<span class="dots">...</span></p>
+        <p class="loading-subtext">Preparing your campus events experience</p>
+    </div>
+
+    <script>
+        setTimeout(function () {
+            document.body.classList.add('fade-out');
+            setTimeout(function () { location.replace('index.html'); }, 460);
+        }, 2400);
+
+        var bar = document.querySelector('.progress-bar');
+        var fill = document.querySelector('.progress-fill');
+        if (bar && fill) {
+            var start = Date.now();
+            var duration = 2200;
+            (function tick() {
+                var p = Math.min(100, Math.round(((Date.now() - start) / duration) * 100));
+                bar.setAttribute('aria-valuenow', p);
+                if (p < 100) requestAnimationFrame(tick);
+            })();
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EventSphere | College Event Management Portal</title>
+  <meta name="description" content="EventSphere is a modern college event management portal to discover, explore and register for campus events.">
+
+  <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Karla:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Unbounded:wght@500;600;700;800&display=swap" rel="stylesheet">
+
+  <script>
+  (function () {
+    try {
+      var t = null;
+      try { t = localStorage.getItem("eventsphere_theme"); } catch (e) {}
+      if (!t) { try { var m = window.name.match(/(?:^|;)eventsphere_theme=([^;]+)/); if (m) t = m[1]; } catch (e2) {} }
+      if (t === "light") document.documentElement.classList.add("light-mode");
+    } catch (e) {}
+  })();
+</script>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- ============ SKIP LINK (Accessibility) ============ -->
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <!-- ============ FIXED HEADER / NAVIGATION ============ -->
+  <header class="site-header" id="site-header">
+    <nav class="navbar" aria-label="Primary navigation">
+      <a href="index.html" class="logo">
+        <span class="logo-mark" aria-hidden="true">
+          <svg viewBox="0 0 40 40" width="32" height="32">
+            <circle cx="20" cy="20" r="7" fill="url(#logoGradient)"/>
+            <ellipse cx="20" cy="20" rx="18" ry="7" fill="none" stroke="url(#logoGradient)" stroke-width="2"/>
+            <defs>
+              <linearGradient id="logoGradient" x1="0" y1="0" x2="40" y2="40">
+                <stop offset="0%" stop-color="#f59e0b"/>
+                <stop offset="100%" stop-color="#ec4899"/>
+              </linearGradient>
+            </defs>
+          </svg>
+        </span>
+        <span class="logo-text">Event<span>Sphere</span></span>
+      </a>
+
+      <button class="nav-toggle" id="navToggle" aria-label="Open navigation menu" aria-expanded="false" aria-controls="primaryMenu">
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+      </button>
+
+      <div class="nav-menu" id="primaryMenu">
+        <ul class="nav-links">
+          <li><a href="index.html" class="nav-link active">Home</a></li>
+          <li><a href="events.html" class="nav-link">Events</a></li>
+          <li><a href="categories.html" class="nav-link">Categories</a></li>
+          <li><a href="about.html" class="nav-link">About Us</a></li>
+          <li><a href="contact.html" class="nav-link">Contact Us</a></li>
+        </ul>
+
+        <div class="nav-actions">
+          <a href="signin.html" class="btn btn-ghost guest-only">Sign In</a>
+          <a href="signup.html" class="btn btn-primary btn-small guest-only">Sign Up</a>
+
+           <button class="btn btn-ghost auth-only" id="logoutBtn" type="button">Logout</button>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <!-- ============ MAIN CONTENT ============ -->
+  <main id="main-content">
+
+  <section class="hero" aria-labelledby="hero-heading">
+      <div class="hero-bg" aria-hidden="true">
+        <div class="hero-orb hero-orb--1"></div>
+        <div class="hero-orb hero-orb--2"></div>
+        <div class="hero-orb hero-orb--3"></div>
+        <div class="hero-grid"></div>
+      </div>
+
+      <div class="container hero-inner">
+        <div class="hero-content">
+          <p class="eyebrow">Campus Events, Simplified</p>
+          <h1 id="hero-heading">Discover and join events your college will remember.</h1>
+          <p class="hero-subtext">EventSphere brings every tech fest, cultural night, workshop and competition from Chitkara University into one clean, organized place — so you never miss what matters.</p>
+          <div class="hero-actions">
+            <a href="signup.html" class="btn btn-primary btn-large">Register Now</a>
+            <a href="#why-choose" class="btn btn-secondary btn-large">Learn More</a>
+          </div>
+          <ul class="hero-trust" aria-label="Platform highlights">
+            <li>120+ Events Hosted</li>
+            <li>15k+ Students</li>
+            <li>40+ Clubs</li>
+          </ul>
+        </div>
+
+        <div class="hero-visual" aria-hidden="true">
+          <svg viewBox="0 0 480 420" width="100%" height="100%">
+            <defs>
+              <linearGradient id="heroGrad1" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#f59e0b"/>
+                <stop offset="100%" stop-color="#ec4899"/>
+              </linearGradient>
+            </defs>
+            <ellipse cx="240" cy="360" rx="170" ry="20" fill="#f59e0b" opacity="0.06"/>
+            <circle cx="240" cy="210" r="92" fill="url(#heroGrad1)" opacity="0.12"/>
+            <circle cx="240" cy="210" r="60" fill="url(#heroGrad1)" opacity="0.9"/>
+            <ellipse cx="240" cy="210" rx="150" ry="55" fill="none" stroke="#a855f7" stroke-width="2" opacity="0.4"/>
+            <ellipse cx="240" cy="210" rx="150" ry="55" fill="none" stroke="#f59e0b" stroke-width="2" opacity="0.3" transform="rotate(60 240 210)"/>
+            <ellipse cx="240" cy="210" rx="150" ry="55" fill="none" stroke="#a855f7" stroke-width="2" opacity="0.3" transform="rotate(120 240 210)"/>
+            <circle cx="390" cy="210" r="10" fill="#f59e0b"/>
+            <circle cx="90" cy="210" r="8" fill="#a855f7"/>
+            <circle cx="300" cy="90" r="7" fill="#a855f7"/>
+            <circle cx="180" cy="330" r="9" fill="#f59e0b"/>
+            <rect x="205" y="185" width="70" height="50" rx="10" fill="#FFFFFF" opacity="0.9"/>
+            <rect x="217" y="198" width="46" height="6" rx="3" fill="#f59e0b"/>
+            <rect x="217" y="210" width="30" height="6" rx="3" fill="#a855f7"/>
+          </svg>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ FEATURED EVENTS ============ -->
+    <section class="section" aria-labelledby="featured-heading">
+      <div class="container">
+        <div class="section-heading">
+          <p class="eyebrow">Don't Miss Out</p>
+          <h2 id="featured-heading">Featured Events</h2>
+          <p class="section-subtext">The most anticipated events happening on campus right now.</p>
+        </div>
+
+        <div class="card-grid card-grid-4">
+          <article class="event-card">
+            <div class="event-poster poster-blue has-image" aria-hidden="true">
+              <img src="images/hackathon1.jpeg" alt="CodeSphere Hackathon poster" loading="lazy">
+            </div>
+            <div class="event-card-body">
+              <span class="pill pill-tech">Tech</span>
+              <h3 class="event-title">CodeSphere Hackathon</h3>
+              <ul class="event-meta">
+                <li><svg class="icon"><use href="#i-calendar"/></svg> Aug 22, 2026</li>
+                <li><svg class="icon"><use href="#i-clock"/></svg> 9:00 AM</li>
+                <li><svg class="icon"><use href="#i-pin"/></svg> CS Block, Auditorium</li>
+              </ul>
+              <a href="event-details.html?id=codesphere-hackathon" class="btn btn-primary btn-small btn-block">Register</a>
+            </div>
+          </article>
+
+          <article class="event-card">
+            <div class="event-poster poster-purple has-image" aria-hidden="true">
+              <img src="images/concert.jpeg" alt="Rhythm Nite poster" loading="lazy">
+            </div>
+            <div class="event-card-body">
+              <span class="pill pill-cultural">Cultural</span>
+              <h3 class="event-title">Rhythm Nite — Battle of Bands</h3>
+              <ul class="event-meta">
+                <li><svg class="icon"><use href="#i-calendar"/></svg> Aug 28, 2026</li>
+                <li><svg class="icon"><use href="#i-clock"/></svg> 6:00 PM</li>
+                <li><svg class="icon"><use href="#i-pin"/></svg> Open Air Theatre</li>
+              </ul>
+              <a href="event-details.html?id=rhythm-nite" class="btn btn-primary btn-small btn-block">Register</a>
+            </div>
+          </article>
+
+          <article class="event-card">
+            <div class="event-poster poster-blue has-image" aria-hidden="true">
+              <img src="images/session.jpeg" alt="UI/UX Design Sprint poster" loading="lazy">
+            </div>
+            <div class="event-card-body">
+              <span class="pill pill-workshop">Workshop</span>
+              <h3 class="event-title">UI/UX Design Sprint</h3>
+              <ul class="event-meta">
+                <li><svg class="icon"><use href="#i-calendar"/></svg> Sep 3, 2026</li>
+                <li><svg class="icon"><use href="#i-clock"/></svg> 11:00 AM</li>
+                <li><svg class="icon"><use href="#i-pin"/></svg> Innovation Lab</li>
+              </ul>
+              <a href="event-details.html?id=uiux-sprint" class="btn btn-primary btn-small btn-block">Register</a>
+            </div>
+          </article>
+
+          <article class="event-card">
+            <div class="event-poster poster-purple has-image" aria-hidden="true">
+              <img src="images/public-speaking.jpeg" alt="Inter-College Debate Cup poster" loading="lazy">
+            </div>
+            <div class="event-card-body">
+              <span class="pill pill-competition">Competition</span>
+              <h3 class="event-title">Inter-College Debate Cup</h3>
+              <ul class="event-meta">
+                <li><svg class="icon"><use href="#i-calendar"/></svg> Sep 10, 2026</li>
+                <li><svg class="icon"><use href="#i-clock"/></svg> 10:00 AM</li>
+                <li><svg class="icon"><use href="#i-pin"/></svg> Seminar Hall 2</li>
+              </ul>
+              <a href="event-details.html?id=debate-cup" class="btn btn-primary btn-small btn-block">Register</a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ UPCOMING EVENTS ============ -->
+    <section class="section section-alt" aria-labelledby="upcoming-heading">
+      <div class="container">
+        <div class="section-heading">
+          <p class="eyebrow">Mark Your Calendar</p>
+          <h2 id="upcoming-heading">Upcoming Events</h2>
+          <p class="section-subtext">Freshly announced events opening for registration soon.</p>
+        </div>
+
+        <div class="card-grid card-grid-3">
+          <article class="event-card">
+            <div class="event-poster poster-blue has-image" aria-hidden="true">
+              <img src="images/sports.jpeg" alt="Campus Premier League poster" loading="lazy">
+            </div>
+            <div class="event-card-body">
+              <span class="pill pill-sports">Sports</span>
+              <h3 class="event-title">Campus Premier League</h3>
+              <ul class="event-meta">
+                <li><svg class="icon"><use href="#i-calendar"/></svg> Sep 15, 2026</li>
+                <li><svg class="icon"><use href="#i-clock"/></svg> 7:00 AM</li>
+                <li><svg class="icon"><use href="#i-pin"/></svg> Main Sports Ground</li>
+              </ul>
+              <a href="event-details.html?id=premier-league" class="btn btn-primary btn-small btn-block">Register</a>
+            </div>
+          </article>
+
+          <article class="event-card">
+            <div class="event-poster poster-purple has-image" aria-hidden="true">
+              <img src="images/aiexpo.jpg" alt="AI &amp; Robotics Expo poster" loading="lazy">
+            </div>
+            <div class="event-card-body">
+              <span class="pill pill-tech">Tech</span>
+              <h3 class="event-title">AI & Robotics Expo</h3>
+              <ul class="event-meta">
+                <li><svg class="icon"><use href="#i-calendar"/></svg> Sep 20, 2026</li>
+                <li><svg class="icon"><use href="#i-clock"/></svg> 10:00 AM</li>
+                <li><svg class="icon"><use href="#i-pin"/></svg> Engineering Block Foyer</li>
+              </ul>
+              <a href="event-details.html?id=ai-robotics-expo" class="btn btn-primary btn-small btn-block">Register</a>
+            </div>
+          </article>
+
+          <article class="event-card">
+            <div class="event-poster poster-blue has-image" aria-hidden="true">
+              <img src="images/bigfest.jpg" alt="Annual Cultural Fest — Zenith poster" loading="lazy">
+            </div>
+            <div class="event-card-body">
+              <span class="pill pill-cultural">Cultural</span>
+              <h3 class="event-title">Annual Cultural Fest — Zenith</h3>
+              <ul class="event-meta">
+                <li><svg class="icon"><use href="#i-calendar"/></svg> Oct 2, 2026</li>
+                <li><svg class="icon"><use href="#i-clock"/></svg> 5:00 PM</li>
+                <li><svg class="icon"><use href="#i-pin"/></svg> Main Campus Grounds</li>
+              </ul>
+              <a href="event-details.html?id=zenith-fest" class="btn btn-primary btn-small btn-block">Register</a>
+            </div>
+          </article>
+        </div>
+
+        <div class="section-cta">
+          <a href="events.html" class="btn btn-secondary">View All Events</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ EVENT CATEGORIES ============ -->
+    <section class="section" id="categories" aria-labelledby="categories-heading">
+      <div class="container">
+        <div class="section-heading">
+          <p class="eyebrow">Explore by Interest</p>
+          <h2 id="categories-heading">Event Categories</h2>
+          <p class="section-subtext">Find exactly the kind of event you're looking for.</p>
+        </div>
+
+        <div class="category-grid">
+          <a href="events.html?filter=Technical" class="category-card">
+            <span class="category-icon" aria-hidden="true"><svg class="icon"><use href="#i-code"/></svg></span>
+            <span class="category-name">Technical</span>
+          </a>
+          <a href="events.html?filter=Cultural" class="category-card">
+            <span class="category-icon" aria-hidden="true"><svg class="icon"><use href="#i-music"/></svg></span>
+            <span class="category-name">Cultural</span>
+          </a>
+          <a href="events.html?filter=Sports" class="category-card">
+            <span class="category-icon" aria-hidden="true"><svg class="icon"><use href="#i-trophy"/></svg></span>
+            <span class="category-name">Sports</span>
+          </a>
+          <a href="events.html?filter=Workshops" class="category-card">
+            <span class="category-icon" aria-hidden="true"><svg class="icon"><use href="#i-pen"/></svg></span>
+            <span class="category-name">Workshops</span>
+          </a>
+          <a href="events.html?filter=Competitions" class="category-card">
+            <span class="category-icon" aria-hidden="true"><svg class="icon"><use href="#i-medal"/></svg></span>
+            <span class="category-name">Competitions</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ WHY CHOOSE EVENTSPHERE ============ -->
+    <section class="section section-alt" id="why-choose" aria-labelledby="why-heading">
+      <div class="container">
+        <div class="section-heading">
+          <p class="eyebrow">The EventSphere Advantage</p>
+          <h2 id="why-heading">Why Choose EventSphere</h2>
+          <p class="section-subtext">Built by students, for students — everything you need in one place.</p>
+        </div>
+
+        <div class="feature-grid">
+          <article class="feature-card">
+            <span class="feature-icon" aria-hidden="true"><svg class="icon"><use href="#i-zap"/></svg></span>
+            <h3>One-Click Registration</h3>
+            <p>Sign up for any event on campus in seconds, no paperwork or queues required.</p>
+          </article>
+          <article class="feature-card">
+            <span class="feature-icon" aria-hidden="true"><svg class="icon"><use href="#i-bell"/></svg></span>
+            <h3>Never Miss an Event</h3>
+            <p>Browse a single, organized calendar of everything happening across your college.</p>
+          </article>
+          <article class="feature-card">
+            <span class="feature-icon" aria-hidden="true"><svg class="icon"><use href="#i-lock"/></svg></span>
+            <h3>Verified College Access</h3>
+            <p>Only verified college email IDs can register, keeping the community authentic.</p>
+          </article>
+          <article class="feature-card">
+            <span class="feature-icon" aria-hidden="true"><svg class="icon"><use href="#i-smartphone"/></svg></span>
+            <h3>Built for Every Screen</h3>
+            <p>A clean, responsive experience whether you're on a laptop or your phone.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ STATISTICS ============ -->
+    <section class="stats-band" aria-labelledby="stats-heading">
+      <div class="container">
+        <h2 id="stats-heading" class="visually-hidden">EventSphere Statistics</h2>
+        <div class="stats-grid">
+          <div class="stat-item">
+            <span class="stat-number">120+</span>
+            <span class="stat-label">Events Hosted</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number">15,000+</span>
+            <span class="stat-label">Active Students</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number">40+</span>
+            <span class="stat-label">Departments & Clubs</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number">300+</span>
+            <span class="stat-label">Awards Given</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ HOW IT WORKS ============ -->
+    <section class="section" aria-labelledby="how-heading">
+      <div class="container">
+        <div class="section-heading">
+          <p class="eyebrow">How It Works</p>
+          <h2 id="how-heading">Three steps to your next event</h2>
+          <p class="section-subtext">No paperwork, no queues — EventSphere keeps it simple.</p>
+        </div>
+
+        <div class="feature-grid">
+          <article class="feature-card">
+            <span class="step-num" aria-hidden="true">1</span>
+            <h3>Discover</h3>
+            <p>Browse every campus event in one place. Filter by category, search by name or venue, and sort by date.</p>
+          </article>
+          <article class="feature-card">
+            <span class="step-num" aria-hidden="true">2</span>
+            <h3>Register</h3>
+            <p>Create a free account with your college email and join any event in a single click.</p>
+          </article>
+          <article class="feature-card">
+            <span class="step-num" aria-hidden="true">3</span>
+            <h3>Attend</h3>
+            <p>Show your college ID at the venue. Your registrations stay saved to your account.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ FAQ (pure CSS accordion via details/summary) ============ -->
+    <section class="section section-alt" aria-labelledby="faq-heading">
+      <div class="container container-narrow">
+        <div class="section-heading">
+          <p class="eyebrow">Have Questions?</p>
+          <h2 id="faq-heading">Frequently Asked Questions</h2>
+        </div>
+
+        <div class="faq-list">
+          <details class="faq-item">
+            <summary>Who can register on EventSphere?</summary>
+            <p>Any currently enrolled student with a valid college email ID can create an account and register for events.</p>
+          </details>
+          <details class="faq-item">
+            <summary>Is there a fee to use EventSphere?</summary>
+            <p>Creating an account and browsing events is completely free. Some events may have their own participation fee, shown on the event's details page.</p>
+          </details>
+          <details class="faq-item">
+            <summary>Can I register for multiple events?</summary>
+            <p>Yes, you can register for as many events as you like, as long as their schedules don't clash.</p>
+          </details>
+          <details class="faq-item">
+            <summary>How do I get updates about an event?</summary>
+            <p>Once registered, updates are shared via your registered college email and shown on the event's details page.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ NEWSLETTER ============ -->
+    <section class="newsletter-band" id="newsletter" aria-labelledby="newsletter-heading">
+      <div class="container container-narrow newsletter-content">
+        <h2 id="newsletter-heading">Stay in the loop</h2>
+        <p>Get a weekly digest of new and upcoming campus events, straight to your inbox.</p>
+        <form class="newsletter-form" novalidate>
+          <label for="newsletterEmail" class="visually-hidden">Email address</label>
+          <input type="email" id="newsletterEmail" name="newsletterEmail" placeholder="you@college.edu" required>
+          <button type="submit" class="btn btn-primary">Subscribe</button>
+        </form>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ============ FOOTER (consistent across all pages) ============ -->
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="logo">
+          <span class="logo-mark" aria-hidden="true">
+            <svg viewBox="0 0 40 40" width="28" height="28">
+              <circle cx="20" cy="20" r="7" fill="url(#footerLogoGradient)"/>
+              <ellipse cx="20" cy="20" rx="18" ry="7" fill="none" stroke="url(#footerLogoGradient)" stroke-width="2"/>
+              <defs>
+                <linearGradient id="footerLogoGradient" x1="0" y1="0" x2="40" y2="40">
+                <stop offset="0%" stop-color="#f59e0b"/>
+                <stop offset="100%" stop-color="#ec4899"/>
+                </linearGradient>
+              </defs>
+            </svg>
+          </span>
+        <span class="logo-text">Event<span>Sphere</span></span>
+        </a>
+        <p class="footer-tagline">The campus event management portal built for students, by students.</p>
+        <div class="social-icons">
+          <a href="#" aria-label="EventSphere on Instagram"><svg class="icon"><use href="#i-instagram"/></svg></a>
+          <a href="#" aria-label="EventSphere on LinkedIn"><svg class="icon"><use href="#i-linkedin"/></svg></a>
+          <a href="#" aria-label="EventSphere on Twitter/X"><svg class="icon"><use href="#i-twitter"/></svg></a>
+          <a href="#" aria-label="EventSphere on YouTube"><svg class="icon"><use href="#i-youtube"/></svg></a>
+        </div>
+      </div>
+
+      <nav class="footer-col" aria-label="Quick links">
+        <h3>Quick Links</h3>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="events.html">Events</a></li>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="contact.html">Contact Us</a></li>
+        </ul>
+      </nav>
+
+      <nav class="footer-col" aria-label="About">
+        <h3>About</h3>
+        <ul>
+          <li><a href="about.html">Our Mission</a></li>
+          <li><a href="about.html#team">Our Team</a></li>
+          <li><a href="signup.html">Join EventSphere</a></li>
+        </ul>
+      </nav>
+
+      <nav class="footer-col" aria-label="Legal">
+        <h3>Legal</h3>
+        <ul>
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Terms &amp; Conditions</a></li>
+          <li><a href="contact.html">Support</a></li>
+        </ul>
+      </nav>
+    </div>
+
+    <div class="footer-bottom">
+      <p>&copy; 2026 EventSphere. All rights reserved. Built for academic project purposes.</p>
+    </div>
+  </footer>
+
+  <script src="js/icons.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

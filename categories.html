@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EventSphere | Categories</title>
+  <meta name="description" content="Browse campus events by category — Technical, Cultural, Sports, Workshops and Competitions on EventSphere." />
+  <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Karla:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Unbounded:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <script>
+  (function () {
+    try {
+      var t = null;
+      try { t = localStorage.getItem("eventsphere_theme"); } catch (e) {}
+      if (!t) { try { var m = window.name.match(/(?:^|;)eventsphere_theme=([^;]+)/); if (m) t = m[1]; } catch (e2) {} }
+      if (t === "light") document.documentElement.classList.add("light-mode");
+    } catch (e) {}
+  })();
+</script>
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <header class="site-header" id="site-header">
+    <nav class="navbar" aria-label="Primary navigation">
+      <a href="index.html" class="logo">
+        <span class="logo-mark" aria-hidden="true">
+          <svg viewBox="0 0 40 40" width="32" height="32">
+            <circle cx="20" cy="20" r="7" fill="url(#logoGradient)"/>
+            <ellipse cx="20" cy="20" rx="18" ry="7" fill="none" stroke="url(#logoGradient)" stroke-width="2"/>
+            <defs><linearGradient id="logoGradient" x1="0" y1="0" x2="40" y2="40"><stop offset="0%" stop-color="#f59e0b"/><stop offset="100%" stop-color="#ec4899"/></linearGradient></defs>
+          </svg>
+        </span>
+        <span class="logo-text">Event<span>Sphere</span></span>
+      </a>
+      <button class="nav-toggle" id="navToggle" aria-label="Open navigation menu" aria-expanded="false" aria-controls="primaryMenu">
+        <span class="nav-toggle-bar"></span><span class="nav-toggle-bar"></span><span class="nav-toggle-bar"></span>
+      </button>
+      <div class="nav-menu" id="primaryMenu">
+        <ul class="nav-links">
+          <li><a href="index.html" class="nav-link">Home</a></li>
+          <li><a href="events.html" class="nav-link">Events</a></li>
+          <li><a href="categories.html" class="nav-link active">Categories</a></li>
+          <li><a href="about.html" class="nav-link">About Us</a></li>
+          <li><a href="contact.html" class="nav-link">Contact Us</a></li>
+        </ul>
+        <div class="nav-actions">
+          <a href="signin.html" class="btn btn-ghost guest-only">Sign In</a>
+          <a href="signup.html" class="btn btn-primary btn-small guest-only">Sign Up</a>
+          <button class="btn btn-ghost auth-only" id="logoutBtn" type="button">Logout</button>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main id="main-content">
+    <!-- Hero -->
+    <section class="page-hero">
+      <div class="container">
+        <p class="eyebrow">Find Your Vibe</p>
+        <h1>Browse by Category</h1>
+        <p class="page-hero-sub">Five tracks, dozens of experiences. Pick what excites you and dive straight into the events you’ll love.</p>
+      </div>
+    </section>
+
+    <!-- Category details -->
+    <section class="section">
+      <div class="container">
+        <div class="category-grid categories-page-grid">
+          <a href="events.html?filter=Technical" class="category-card detailed">
+            <span class="category-icon" aria-hidden="true"><svg class="icon"><use href="#i-code"/></svg></span>
+            <span class="category-name">Technical</span>
+            <p class="category-desc">Hackathons, expos, pitch nights and code sprints. Build, demo, and get hired. For builders and tinkerers.</p>
+            <div class="category-meta">
+              <span class="category-count" data-category="Technical">— events</span>
+              <span class="category-cta">Explore →</span>
+            </div>
+          </a>
+
+          <a href="events.html?filter=Cultural" class="category-card detailed">
+            <span class="category-icon" aria-hidden="true"><svg class="icon"><use href="#i-music"/></svg></span>
+            <span class="category-name">Cultural</span>
+            <p class="category-desc">Battle of bands, photowalks, dance battles and the grand Zenith fest. Where the campus comes alive.</p>
+            <div class="category-meta">
+              <span class="category-count" data-category="Cultural">— events</span>
+              <span class="category-cta">Explore →</span>
+            </div>
+          </a>
+
+          <a href="events.html?filter=Sports" class="category-card detailed">
+            <span class="category-icon" aria-hidden="true"><svg class="icon"><use href="#i-trophy"/></svg></span>
+            <span class="category-name">Sports</span>
+            <p class="category-desc">CPL, esports arenas, and inter-department leagues. Play hard, cheer louder.</p>
+            <div class="category-meta">
+              <span class="category-count" data-category="Sports">— events</span>
+              <span class="category-cta">Explore →</span>
+            </div>
+          </a>
+
+          <a href="events.html?filter=Workshops" class="category-card detailed">
+            <span class="category-icon" aria-hidden="true"><svg class="icon"><use href="#i-pen"/></svg></span>
+            <span class="category-name">Workshops</span>
+            <p class="category-desc">Hands-on sprints — Figma, wellness, robotics. Small groups, real mentors, portfolio-ready outcomes.</p>
+            <div class="category-meta">
+              <span class="category-count" data-category="Workshops">— events</span>
+              <span class="category-cta">Explore →</span>
+            </div>
+          </a>
+
+          <a href="events.html?filter=Competitions" class="category-card detailed">
+            <span class="category-icon" aria-hidden="true"><svg class="icon"><use href="#i-medal"/></svg></span>
+            <span class="category-name">Competitions</span>
+            <p class="category-desc">Debate cups and CodeGolf — timed, judged, and rewarded. Bring your A-game.</p>
+            <div class="category-meta">
+              <span class="category-count" data-category="Competitions">— events</span>
+              <span class="category-cta">Explore →</span>
+            </div>
+          </a>
+        </div>
+
+        <!-- Helper strip -->
+        <div style="margin-top:28px; background:var(--color-surface); border:1px solid var(--color-border); border-radius:14px; padding:18px 20px; display:flex; gap:14px; align-items:center; flex-wrap:wrap; justify-content:space-between;">
+          <p style="margin:0; font-size:0.92rem; color:var(--color-text-dim);"><strong style="color:var(--color-text);">Not sure?</strong> Start with all events and filter as you go.</p>
+          <a href="events.html" class="btn btn-primary btn-small">View All Events</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Why categories help -->
+    <section class="section section-alt">
+      <div class="container">
+        <div class="section-heading">
+          <p class="eyebrow">How it works</p>
+          <h2>From curiosity to front row</h2>
+          <p class="section-subtext">We tag every event so you don’t have to hunt through posters.</p>
+        </div>
+        <div class="feature-grid">
+          <article class="feature-card">
+            <span class="feature-icon" aria-hidden="true"><svg class="icon"><use href="#i-search"/></svg></span>
+            <h3>Discover faster</h3>
+            <p>Filter by category, search by venue or keyword, sort by date or popularity — all without reloading.</p>
+          </article>
+          <article class="feature-card">
+            <span class="feature-icon" aria-hidden="true"><svg class="icon"><use href="#i-sparkles"/></svg></span>
+            <h3>Personal vibe</h3>
+            <p>Technical for builders, Cultural for performers, Sports for competitors — find your people.</p>
+          </article>
+          <article class="feature-card">
+            <span class="feature-icon" aria-hidden="true"><svg class="icon"><use href="#i-zap"/></svg></span>
+            <h3>One-click register</h3>
+            <p>Once you pick a category, registration is instant. No forms, no queues.</p>
+          </article>
+          <article class="feature-card">
+            <span class="feature-icon" aria-hidden="true"><svg class="icon"><use href="#i-bell"/></svg></span>
+            <h3>Stay updated</h3>
+            <p>We send category-specific digests — only the events you care about land in your inbox.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Category stats preview -->
+    <section class="stats-band">
+      <div class="container">
+        <div class="stats-grid">
+          <div class="stat-item"><span class="stat-number" id="stat-technical">—</span><span class="stat-label">Technical Events</span></div>
+          <div class="stat-item"><span class="stat-number" id="stat-cultural">—</span><span class="stat-label">Cultural Events</span></div>
+          <div class="stat-item"><span class="stat-number" id="stat-sports">—</span><span class="stat-label">Sports Events</span></div>
+          <div class="stat-item"><span class="stat-number" id="stat-all">—</span><span class="stat-label">Total Events</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="newsletter-band" id="newsletter">
+      <div class="container container-narrow newsletter-content">
+        <h2>Want category alerts?</h2>
+        <p>Get a weekly digest filtered to the categories you choose.</p>
+        <form class="newsletter-form" novalidate>
+          <label for="newsletterEmail" class="visually-hidden">Email address</label>
+          <input type="email" id="newsletterEmail" placeholder="you@college.edu" required>
+          <button type="submit" class="btn btn-primary">Subscribe</button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="logo">
+          <span class="logo-mark" aria-hidden="true">
+            <svg viewBox="0 0 40 40" width="28" height="28"><circle cx="20" cy="20" r="7" fill="url(#footerLogoGradient)"/><ellipse cx="20" cy="20" rx="18" ry="7" fill="none" stroke="url(#footerLogoGradient)" stroke-width="2"/><defs><linearGradient id="footerLogoGradient" x1="0" y1="0" x2="40" y2="40"><stop offset="0%" stop-color="#f59e0b"/><stop offset="100%" stop-color="#ec4899"/></linearGradient></defs></svg>
+          </span>
+          <span class="logo-text">Event<span>Sphere</span></span>
+        </a>
+        <p class="footer-tagline">The campus event management portal built for students, by students.</p>
+        <div class="social-icons"><a href="#" aria-label="Instagram"><svg class="icon"><use href="#i-instagram"/></svg></a><a href="#" aria-label="LinkedIn"><svg class="icon"><use href="#i-linkedin"/></svg></a><a href="#" aria-label="Twitter"><svg class="icon"><use href="#i-twitter"/></svg></a><a href="#" aria-label="YouTube"><svg class="icon"><use href="#i-youtube"/></svg></a></div>
+      </div>
+      <nav class="footer-col" aria-label="Quick links"><h3>Quick Links</h3><ul><li><a href="index.html">Home</a></li><li><a href="events.html">Events</a></li><li><a href="about.html">About Us</a></li><li><a href="contact.html">Contact Us</a></li></ul></nav>
+      <nav class="footer-col" aria-label="About"><h3>About</h3><ul><li><a href="about.html">Our Mission</a></li><li><a href="about.html#team">Our Team</a></li><li><a href="signup.html">Join EventSphere</a></li></ul></nav>
+      <nav class="footer-col" aria-label="Legal"><h3>Legal</h3><ul><li><a href="#">Privacy Policy</a></li><li><a href="#">Terms & Conditions</a></li><li><a href="contact.html">Support</a></li></ul></nav>
+    </div>
+    <div class="footer-bottom"><p>&copy; 2026 EventSphere. All rights reserved. Built for academic project purposes.</p></div>
+  </footer>
+
+  <script src="js/icons.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/events.js"></script>
+  <script src="js/main.js"></script>
+  <script>
+    const cats = ["Technical","Cultural","Sports","Workshops","Competitions"];
+    const counts = {};
+    cats.forEach(c => counts[c] = 0);
+    (window.EVENTSPHERE_EVENTS || []).forEach(e => { if (counts[e.category] !== undefined) counts[e.category]++; });
+    document.querySelectorAll(".category-count").forEach(el => {
+      const cat = el.dataset.category;
+      const n = counts[cat] || 0;
+      el.textContent = `${n} event${n!==1?"s":""}`;
+    });
+    const set = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
+    set("stat-technical", counts["Technical"] || 0);
+    set("stat-cultural", counts["Cultural"] || 0);
+    set("stat-sports", counts["Sports"] || 0);
+    set("stat-all", (window.EVENTSPHERE_EVENTS||[]).length);
+  </script>
+</body>
+</html>

@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EventSphere | Contact Us</title>
+  <meta name="description" content="Contact EventSphere — get support for registrations and event information at Chitkara University, Punjab." />
+  <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Karla:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Unbounded:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <script>
+  (function () {
+    try {
+      var t = null;
+      try { t = localStorage.getItem("eventsphere_theme"); } catch (e) {}
+      if (!t) { try { var m = window.name.match(/(?:^|;)eventsphere_theme=([^;]+)/); if (m) t = m[1]; } catch (e2) {} }
+      if (t === "light") document.documentElement.classList.add("light-mode");
+    } catch (e) {}
+  })();
+</script>
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <header class="site-header" id="site-header">
+    <nav class="navbar" aria-label="Primary navigation">
+      <a href="index.html" class="logo">
+        <span class="logo-mark" aria-hidden="true">
+          <svg viewBox="0 0 40 40" width="32" height="32"><circle cx="20" cy="20" r="7" fill="url(#logoGradient)"/><ellipse cx="20" cy="20" rx="18" ry="7" fill="none" stroke="url(#logoGradient)" stroke-width="2"/><defs><linearGradient id="logoGradient" x1="0" y1="0" x2="40" y2="40"><stop offset="0%" stop-color="#f59e0b"/><stop offset="100%" stop-color="#ec4899"/></linearGradient></defs></svg>
+        </span>
+        <span class="logo-text">Event<span>Sphere</span></span>
+      </a>
+      <button class="nav-toggle" id="navToggle" aria-label="Open navigation menu" aria-expanded="false" aria-controls="primaryMenu"><span class="nav-toggle-bar"></span><span class="nav-toggle-bar"></span><span class="nav-toggle-bar"></span></button>
+      <div class="nav-menu" id="primaryMenu">
+        <ul class="nav-links">
+          <li><a href="index.html" class="nav-link">Home</a></li>
+          <li><a href="events.html" class="nav-link">Events</a></li>
+          <li><a href="categories.html" class="nav-link">Categories</a></li>
+          <li><a href="about.html" class="nav-link">About Us</a></li>
+          <li><a href="contact.html" class="nav-link active">Contact Us</a></li>
+        </ul>
+        <div class="nav-actions">
+          <a href="signin.html" class="btn btn-ghost guest-only">Sign In</a>
+          <a href="signup.html" class="btn btn-primary btn-small guest-only">Sign Up</a>
+          <button class="btn btn-ghost auth-only" id="logoutBtn" type="button">Logout</button>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main id="main-content">
+    <section class="page-hero">
+      <div class="container">
+        <p class="eyebrow">We’re here to help</p>
+        <h1>Contact Us</h1>
+        <p class="page-hero-sub">Questions about an event or trouble registering? Drop us a line — we reply within 24 hours.</p>
+      </div>
+    </section>
+
+    <section class="section" style="padding-top:32px;">
+      <div class="container contact-layout">
+        <!-- Form -->
+        <div class="contact-form-wrap">
+          <div style="background:var(--color-surface); border:1px solid var(--color-border); border-radius:18px; padding:28px;">
+            <h2 style="font-size:1.35rem; margin-bottom:6px;">Send a message</h2>
+            <p style="color:var(--color-text-dim); font-size:0.92rem; margin-bottom:22px;">Fill the form and our team will get back to you on your college email.</p>
+
+            <div id="contact-error" role="alert" aria-live="polite" style="display:none;"></div>
+            <div id="contact-success" role="status" aria-live="polite" style="display:none; background:var(--color-success-bg); color:var(--color-success); border:1px solid rgba(52,211,153,0.25); border-radius:10px; padding:12px 14px; margin-bottom:16px; font-size:0.92rem;"></div>
+
+            <form id="contactForm" novalidate>
+              <div class="form-row-2">
+                <div class="form-group" id="cg-name">
+                  <label for="c-name">Full Name</label>
+                  <input type="text" id="c-name" required placeholder="Jordan Blake" autocomplete="name" />
+                  <span class="error-text">Please enter your name.</span>
+                </div>
+                <div class="form-group" id="cg-email">
+                  <label for="c-email">College Email</label>
+                  <input type="email" id="c-email" required placeholder="you@college.edu" autocomplete="email" />
+                  <span class="error-text">Please enter a valid email.</span>
+                </div>
+              </div>
+
+              <div class="form-group" id="cg-subject">
+                <label for="c-subject">Subject</label>
+                <select id="c-subject" required>
+                  <option value="">Select a topic</option>
+                  <option value="registration">Registration help</option>
+                  <option value="event-info">Event information</option>
+                  <option value="feedback">Feedback / Suggestion</option>
+                  <option value="technical">Technical support</option>
+                  <option value="other">Other</option>
+                </select>
+                <span class="error-text">Please select a subject.</span>
+              </div>
+
+              <div class="form-group" id="cg-message">
+                <label for="c-message">Message</label>
+                <textarea id="c-message" required placeholder="Tell us how we can help..." rows="5"></textarea>
+                <span class="error-text">Please enter your message (min 10 characters).</span>
+              </div>
+
+              <button type="submit" class="btn btn-primary btn-block" style="margin-top:18px;">Send Message</button>
+              <p style="font-size:0.82rem; color:var(--color-text-dim); text-align:center; margin-top:10px;">Avg. reply time: under 12 hours on weekdays</p>
+            </form>
+          </div>
+        </div>
+
+        <!-- Info -->
+        <div class="contact-info">
+          <div class="info-card">
+            <span class="info-icon" aria-hidden="true"><svg class="icon"><use href="#i-mail"/></svg></span>
+            <h3>Email</h3>
+            <p><a href="mailto:support@eventsphere.edu" class="form-link">support@eventsphere.edu</a></p>
+            <p style="font-size:0.82rem; color:var(--color-text-dim);">For registrations, refunds, and general help.</p>
+          </div>
+          <div class="info-card">
+            <span class="info-icon" aria-hidden="true"><svg class="icon"><use href="#i-phone"/></svg></span>
+            <h3>Phone</h3>
+            <p><a href="tel:+919876543210" class="form-link">+91 98765 43210</a></p>
+            <p style="font-size:0.82rem; color:var(--color-text-dim);">Mon–Sat, 10 AM – 6 PM IST</p>
+          </div>
+          <div class="info-card">
+            <span class="info-icon" aria-hidden="true"><svg class="icon"><use href="#i-pin"/></svg></span>
+            <h3>Campus Office</h3>
+            <p style="font-size:0.92rem; color:var(--color-text-secondary); line-height:1.6;">Chitkara University, Punjab<br/>Chandigarh–Patiala National Highway (NH-64)<br/>Village Jhansla, Tehsil Rajpura<br/>District Patiala, Punjab — 140401</p>
+            <a href="https://maps.google.com/?q=Chitkara+University+Punjab+Jhansla+Rajpura" target="_blank" rel="noopener" class="btn btn-outline btn-small" style="margin-top:12px;">Open in Maps ↗</a>
+          </div>
+
+          <div class="info-card">
+            <span class="info-icon" aria-hidden="true"><svg class="icon"><use href="#i-clock"/></svg></span>
+            <h3>Visit Hours</h3>
+            <p style="font-size:0.92rem; color:var(--color-text-secondary); line-height:1.6;">Mon–Sat, 9:00 AM – 5:00 PM IST<br/>Student Help Desk, Admin Block<br/>Closed on university holidays</p>
+            <p style="font-size:0.82rem; color:var(--color-text-dim); margin-top:8px;">For directions, use the map below.</p>
+          </div>
+
+          <!-- Map placeholder -->
+          <div class="map-placeholder" aria-hidden="true">
+            <div class="map-grid"></div>
+            <div class="map-pin"><svg class="icon" style="font-size:1.8rem;"><use href="#i-pin"/></svg></div>
+            <p class="map-label">Chitkara University, Rajpura — NH-64</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ teaser -->
+    <section class="section section-alt">
+      <div class="container container-narrow" style="text-align:center;">
+        <h2 style="margin-bottom:12px;">Often asked</h2>
+        <div class="faq-list" style="text-align:left;">
+          <details class="faq-item"><summary>How fast do you reply?</summary><p>Under 12 hours on weekdays, under 24 hours on weekends. For urgent event-day issues, call the helpline.</p></details>
+          <details class="faq-item"><summary>Can I get a refund for a paid event?</summary><p>Refunds follow the official department's policy for that event. Contact us and we’ll connect you to the concerned department.</p></details>
+          <details class="faq-item"><summary>Can I attend events from other departments?</summary><p>Yes — if your eligibility matches the event (usually open to all Chitkara students). Check the event details page for “Who can join”.</p></details>
+        </div>
+        <a href="index.html#faq" class="btn btn-outline" style="margin-top:20px;">View full FAQ</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="logo">
+          <span class="logo-mark" aria-hidden="true">
+            <svg viewBox="0 0 40 40" width="28" height="28"><circle cx="20" cy="20" r="7" fill="url(#footerLogoGradient)"/><ellipse cx="20" cy="20" rx="18" ry="7" fill="none" stroke="url(#footerLogoGradient)" stroke-width="2"/><defs><linearGradient id="footerLogoGradient" x1="0" y1="0" x2="40" y2="40"><stop offset="0%" stop-color="#f59e0b"/><stop offset="100%" stop-color="#ec4899"/></linearGradient></defs></svg>
+          </span>
+          <span class="logo-text">Event<span>Sphere</span></span>
+        </a>
+        <p class="footer-tagline">The campus event management portal built for students, by students.</p>
+        <div class="social-icons"><a href="#" aria-label="Instagram"><svg class="icon"><use href="#i-instagram"/></svg></a><a href="#" aria-label="LinkedIn"><svg class="icon"><use href="#i-linkedin"/></svg></a><a href="#" aria-label="Twitter"><svg class="icon"><use href="#i-twitter"/></svg></a><a href="#" aria-label="YouTube"><svg class="icon"><use href="#i-youtube"/></svg></a></div>
+      </div>
+      <nav class="footer-col" aria-label="Quick links"><h3>Quick Links</h3><ul><li><a href="index.html">Home</a></li><li><a href="events.html">Events</a></li><li><a href="about.html">About Us</a></li><li><a href="contact.html">Contact Us</a></li></ul></nav>
+      <nav class="footer-col" aria-label="About"><h3>About</h3><ul><li><a href="about.html">Our Mission</a></li><li><a href="about.html#team">Our Team</a></li><li><a href="signup.html">Join EventSphere</a></li></ul></nav>
+      <nav class="footer-col" aria-label="Legal"><h3>Legal</h3><ul><li><a href="#">Privacy Policy</a></li><li><a href="#">Terms & Conditions</a></li><li><a href="contact.html">Support</a></li></ul></nav>
+    </div>
+    <div class="footer-bottom"><p>&copy; 2026 EventSphere. All rights reserved. Built for academic project purposes.</p></div>
+  </footer>
+
+  <script src="js/icons.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/main.js"></script>
+  <script>
+    const form = document.getElementById("contactForm");
+    const errBox = document.getElementById("contact-error");
+    const successBox = document.getElementById("contact-success");
+
+    function showErr(msg){
+      errBox.textContent = msg;
+      errBox.style.display = "block";
+      errBox.style.background = "var(--color-error-bg)";
+      errBox.style.color = "var(--color-danger)";
+      errBox.style.border = "1px solid rgba(251,113,133,0.25)";
+      errBox.style.borderRadius = "10px";
+      errBox.style.padding = "10px 14px";
+      errBox.style.marginBottom = "14px";
+      errBox.style.fontSize = "0.875rem";
+    }
+    function clearErr(){ errBox.textContent=""; errBox.style.display="none"; successBox.style.display="none"; }
+
+    form.addEventListener("submit", (e)=>{
+      e.preventDefault();
+      clearErr();
+      document.querySelectorAll(".form-group.has-error").forEach(el=>el.classList.remove("has-error"));
+
+      const name = document.getElementById("c-name").value.trim();
+      const email = document.getElementById("c-email").value.trim();
+      const subject = document.getElementById("c-subject").value;
+      const message = document.getElementById("c-message").value.trim();
+
+      let valid = true;
+      if (!name) { document.getElementById("cg-name").classList.add("has-error"); valid=false; }
+      if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { document.getElementById("cg-email").classList.add("has-error"); valid=false; }
+      if (!subject) { document.getElementById("cg-subject").classList.add("has-error"); valid=false; }
+      if (!message || message.length < 10) { document.getElementById("cg-message").classList.add("has-error"); valid=false; }
+      if (!valid) { showErr("Please correct the highlighted fields."); return; }
+
+      try {
+        const inbox = JSON.parse(localStorage.getItem("eventsphere_messages") || "[]");
+        inbox.push({ name, email, subject, message, at: new Date().toISOString() });
+        localStorage.setItem("eventsphere_messages", JSON.stringify(inbox));
+      } catch {}
+
+      successBox.textContent = `Thanks, ${name.split(" ")[0]}! Your message is sent. We'll reply to ${email} within 24 hours.`;
+      successBox.style.display = "block";
+      form.reset();
+      window.showToast && window.showToast("Message sent! We'll reply soon.");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+  </script>
+</body>
+</html>
