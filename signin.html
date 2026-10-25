@@ -47,6 +47,7 @@
         <ul class="nav-links">
           <li><a href="index.html" class="nav-link">Home</a></li>
           <li><a href="events.html" class="nav-link">Events</a></li>
+          <li><a href="calendar.html" class="nav-link">Calendar</a></li>
           <li><a href="categories.html" class="nav-link">Categories</a></li>
           <li><a href="about.html" class="nav-link">About Us</a></li>
           <li><a href="contact.html" class="nav-link">Contact Us</a></li>
@@ -90,8 +91,6 @@
           <button type="button" id="forgot-password-btn" class="form-link" style="background:none;border:none;padding:0;font-size:0.875rem;">Forgot password?</button>
         </div>
 
-        <div id="signin-captcha"></div>
-
         <button type="submit" class="btn btn-primary btn-block" style="margin-top:18px;">Sign In</button>
       </form>
 
@@ -100,7 +99,7 @@
       </p>
 
       <p style="text-align:center; margin-top:14px; font-size:0.82rem; color:var(--color-text-dim);">
-        Demo: any registered email + password works. No backend — stored in your browser.
+        Demo accounts (work on any device): <strong>student@eventsphere.demo</strong> or <strong>team@eventsphere.demo</strong> · password <strong>demo123</strong>.<br>Accounts you create are stored only in this browser.
       </p>
     </div>
   </main>
@@ -125,7 +124,7 @@
       </div>
       <nav class="footer-col" aria-label="Quick links">
         <h3>Quick Links</h3>
-        <ul><li><a href="index.html">Home</a></li><li><a href="events.html">Events</a></li><li><a href="about.html">About Us</a></li><li><a href="contact.html">Contact Us</a></li></ul>
+        <ul><li><a href="index.html">Home</a></li><li><a href="events.html">Events</a></li><li><a href="calendar.html">Calendar</a></li><li><a href="dashboard.html">My Dashboard</a></li><li><a href="about.html">About Us</a></li><li><a href="contact.html">Contact Us</a></li></ul>
       </nav>
       <nav class="footer-col" aria-label="About"><h3>About</h3><ul><li><a href="about.html">Our Mission</a></li><li><a href="about.html#team">Our Team</a></li><li><a href="signup.html">Join EventSphere</a></li></ul></nav>
       <nav class="footer-col" aria-label="Legal"><h3>Legal</h3><ul><li><a href="#">Privacy Policy</a></li><li><a href="#">Terms & Conditions</a></li><li><a href="contact.html">Support</a></li></ul></nav>
@@ -135,12 +134,12 @@
 
   <script src="js/icons.js"></script>
   <script src="js/auth.js"></script>
-  <script src="js/captcha.js"></script>
+  <script src="js/events.js"></script>
+  <script src="js/store.js"></script>
   <script src="js/main.js"></script>
   <script>
     const form = document.getElementById("signin-form");
     const errorBox = document.getElementById("form-error");
-    const captcha = initCaptcha("signin-captcha");
 
     function showError(msg) {
       errorBox.textContent = msg;
@@ -164,10 +163,9 @@
       showToast("Demo: password reset would be emailed to your college ID.", "success");
     });
 
-    form.addEventListener("submit", (e) => {
+    form.addEventListener("submit", async (e) => {
       e.preventDefault();
       clearError();
-      captcha.clearError();
       document.querySelectorAll(".form-group.has-error").forEach(el => el.classList.remove("has-error"));
 
       let valid = true;
@@ -184,17 +182,18 @@
       }
       if (!valid) { showError("Please correct the highlighted fields."); return; }
 
-      if (!captcha.validate()) {
-        showError("Incorrect CAPTCHA answer. Please try again.");
-        captcha.showError();
-        return;
+      const submitBtn = form.querySelector('button[type="submit"]');
+      const origLabel = submitBtn ? submitBtn.textContent : "";
+      if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = "Signing in…"; }
+      try {
+        const result = await loginUser({ email, password });
+        showToast(result.message);
+        await wait(600);
+        window.location.href = (function(){var n=new URLSearchParams(location.search).get("next");return n&&/^[\w-]+\.html(\?[\w=&%.-]*)?$/.test(n)?n:"index.html";})();
+      } catch (err) {
+        showError(err.message);
+        if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = origLabel; }
       }
-
-      const result = loginUser({ email, password });
-      if (!result.ok) { showError(result.message); return; }
-
-      showToast(result.message);
-      setTimeout(() => window.location.href = "index.html", 600);
     });
   </script>
 </body>

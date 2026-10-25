@@ -45,10 +45,13 @@
     </div>
 
     <script>
-        setTimeout(function () {
+        var wait = function (ms) { return new Promise(function (resolve) { setTimeout(resolve, ms); }); };
+        (async function () {
+            await wait(2400);
             document.body.classList.add('fade-out');
-            setTimeout(function () { location.replace('index.html'); }, 460);
-        }, 2400);
+            await wait(460);
+            location.replace('index.html');
+        })();
 
         var bar = document.querySelector('.progress-bar');
         var fill = document.querySelector('.progress-fill');

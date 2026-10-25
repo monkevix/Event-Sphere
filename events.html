@@ -42,6 +42,7 @@
         <ul class="nav-links">
           <li><a href="index.html" class="nav-link">Home</a></li>
           <li><a href="events.html" class="nav-link active">Events</a></li>
+          <li><a href="calendar.html" class="nav-link">Calendar</a></li>
           <li><a href="categories.html" class="nav-link">Categories</a></li>
           <li><a href="about.html" class="nav-link">About Us</a></li>
           <li><a href="contact.html" class="nav-link">Contact Us</a></li>
@@ -75,6 +76,18 @@
             <button id="clearSearch" class="btn btn-ghost btn-small" style="display:none;" type="button" aria-label="Clear search">✕</button>
           </div>
           <div class="toolbar-actions">
+            <select id="whenSelect" aria-label="Filter by time">
+              <option value="all">Any time</option>
+              <option value="upcoming">Upcoming</option>
+              <option value="week">Next 7 days</option>
+              <option value="weekend">This weekend</option>
+              <option value="past">Past events</option>
+            </select>
+            <select id="priceSelect" aria-label="Filter by price">
+              <option value="all">Free &amp; paid</option>
+              <option value="free">Free only</option>
+              <option value="paid">Paid only</option>
+            </select>
             <select id="sortSelect" aria-label="Sort events">
               <option value="date-asc">Date — Soonest first</option>
               <option value="date-desc">Date — Latest first</option>
@@ -118,7 +131,7 @@
       <div class="container">
         <div class="section-heading" style="margin-bottom:1.5rem;">
           <h2>Your Registrations</h2>
-          <p class="section-subtext">Events you’ve registered for — stored locally in this browser (demo).</p>
+          <p class="section-subtext">Events you’ve joined or waitlisted — tickets and certificates live in your <a href="dashboard.html" style="color:var(--color-link);">dashboard</a>.</p>
         </div>
         <div id="registeredGrid" class="card-grid card-grid-3"></div>
       </div>
@@ -141,7 +154,7 @@
         <p class="footer-tagline">The campus event management portal built for students, by students.</p>
         <div class="social-icons"><a href="#" aria-label="Instagram"><svg class="icon"><use href="#i-instagram"/></svg></a><a href="#" aria-label="LinkedIn"><svg class="icon"><use href="#i-linkedin"/></svg></a><a href="#" aria-label="Twitter"><svg class="icon"><use href="#i-twitter"/></svg></a><a href="#" aria-label="YouTube"><svg class="icon"><use href="#i-youtube"/></svg></a></div>
       </div>
-      <nav class="footer-col" aria-label="Quick links"><h3>Quick Links</h3><ul><li><a href="index.html">Home</a></li><li><a href="events.html">Events</a></li><li><a href="about.html">About Us</a></li><li><a href="contact.html">Contact Us</a></li></ul></nav>
+      <nav class="footer-col" aria-label="Quick links"><h3>Quick Links</h3><ul><li><a href="index.html">Home</a></li><li><a href="events.html">Events</a></li><li><a href="calendar.html">Calendar</a></li><li><a href="dashboard.html">My Dashboard</a></li><li><a href="about.html">About Us</a></li><li><a href="contact.html">Contact Us</a></li><li><a href="admin.html">Admin</a></li></ul></nav>
       <nav class="footer-col" aria-label="About"><h3>About</h3><ul><li><a href="about.html">Our Mission</a></li><li><a href="about.html#team">Our Team</a></li><li><a href="signup.html">Join EventSphere</a></li></ul></nav>
       <nav class="footer-col" aria-label="Legal"><h3>Legal</h3><ul><li><a href="#">Privacy Policy</a></li><li><a href="#">Terms & Conditions</a></li><li><a href="contact.html">Support</a></li></ul></nav>
     </div>
@@ -151,6 +164,7 @@
   <script src="js/icons.js"></script>
   <script src="js/auth.js"></script>
   <script src="js/events.js"></script>
+  <script src="js/store.js"></script>
   <script src="js/main.js"></script>
   <script>
     const grid = document.getElementById("eventsGrid");
@@ -165,15 +179,38 @@
     const registeredGrid = document.getElementById("registeredGrid");
     const countAll = document.getElementById("count-all");
 
+    const ES = window.ES;
+    const whenSelect = document.getElementById("whenSelect");
+    const priceSelect = document.getElementById("priceSelect");
     let activeCategory = "all";
     let searchQuery = "";
     let sortBy = "date-asc";
+    let whenBy = "all";
+    let priceBy = "all";
 
-    if (countAll) countAll.textContent = `· ${window.EVENTSPHERE_EVENTS.length}`;
+    function countAllLabel() { if (countAll) countAll.textContent = `· ${ES.events.length}`; }
+    countAllLabel();
+
+    function inWhen(e) {
+      const st = ES.status(e);
+      if (whenBy === "upcoming") return st !== "ended";
+      if (whenBy === "past") return st === "ended";
+      const today = ES.toISO(new Date());
+      const d = ES.dayDiff(today, e.date);
+      if (whenBy === "week") return d >= 0 && d <= 7 && st !== "ended";
+      if (whenBy === "weekend") {
+        const wd = ES.parseDate(e.date).getDay();
+        return d >= 0 && d <= 7 && (wd === 0 || wd === 6) && st !== "ended";
+      }
+      return true;
+    }
 
     function getFiltered() {
-      let list = [...window.EVENTSPHERE_EVENTS];
+      let list = [...ES.events];
       if (activeCategory !== "all") list = list.filter(e => e.category === activeCategory);
+      if (whenBy !== "all") list = list.filter(inWhen);
+      if (priceBy === "free") list = list.filter(e => ES.priceAmount(e) === 0);
+      if (priceBy === "paid") list = list.filter(e => ES.priceAmount(e) > 0);
       if (searchQuery) {
         const q = searchQuery.toLowerCase();
         list = list.filter(e =>
@@ -181,20 +218,26 @@
           e.description.toLowerCase().includes(q) ||
           e.venue.toLowerCase().includes(q) ||
           e.organizer.toLowerCase().includes(q) ||
-          e.category.toLowerCase().includes(q)
+          e.category.toLowerCase().includes(q) ||
+          (e.tags || []).join(" ").toLowerCase().includes(q)
         );
       }
       list.sort((a,b) => {
-        if (sortBy === "date-asc") return new Date(a.date) - new Date(b.date);
-        if (sortBy === "date-desc") return new Date(b.date) - new Date(a.date);
+        if (sortBy === "date-asc") return ES.startAt(a) - ES.startAt(b);
+        if (sortBy === "date-desc") return ES.startAt(b) - ES.startAt(a);
         if (sortBy === "name-asc") return a.title.localeCompare(b.title);
-        if (sortBy === "attendees-desc") return b.attendees - a.attendees;
+        if (sortBy === "attendees-desc") return ES.filled(b) - ES.filled(a);
         return 0;
       });
       return list;
     }
 
+    function hasFilters() {
+      return activeCategory !== "all" || searchQuery !== "" || sortBy !== "date-asc" || whenBy !== "all" || priceBy !== "all";
+    }
+
     function render() {
+      countAllLabel();
       const list = getFiltered();
       grid.innerHTML = "";
       if (list.length === 0) {
@@ -207,66 +250,67 @@
         resultsCount.textContent = `${list.length} event${list.length !== 1 ? "s" : ""} found${activeCategory !== "all" ? " in " + activeCategory : ""}${searchQuery ? " for “" + searchQuery + "”" : ""}`;
         list.forEach(ev => grid.appendChild(createCard(ev)));
       }
-      const hasFilter = activeCategory !== "all" || searchQuery !== "" || sortBy !== "date-asc";
-      clearFilters.style.display = hasFilter ? "inline-flex" : "none";
+      clearFilters.style.display = hasFilters() ? "inline-flex" : "none";
       clearSearch.style.display = searchQuery ? "inline-flex" : "none";
       renderRegistrations();
+      ES.tick();
+    }
+
+    function joinLabel(ev) {
+      const st = ES.status(ev);
+      if (ES.isRegistered(ev.id)) return { text: "Joined ✓", cls: "btn-secondary" };
+      if (ES.isWaitlisted(ev.id)) return { text: "Waitlisted", cls: "btn-secondary" };
+      if (st === "ended") return { text: "Ended", cls: "btn-outline", disabled: true };
+      if (ES.seatsLeft(ev) === 0) return { text: "Join waitlist", cls: "btn-outline" };
+      return { text: "Join", cls: "btn-outline" };
     }
 
     function createCard(ev) {
       const article = document.createElement("article");
       article.className = "event-card";
-      const registered = window.isRegistered ? window.isRegistered(ev.id) : false;
+      const j = joinLabel(ev);
       const posterInner = ev.image
         ? `<img src="${encodeURI(ev.image)}" alt="${escapeHtml(ev.title)} poster" loading="lazy">`
         : ESIcon(ev.icon, "1.9rem");
+      const rating = ES.ratingSummary(ev.id);
       article.innerHTML = `
         <div class="event-poster ${ev.poster}${ev.image ? ' has-image' : ''}" aria-hidden="true">
           ${posterInner}
         </div>
+        ${ES.heartBtn(ev)}
         <div class="event-card-body">
           <span class="pill ${ev.pill}">${ev.category}</span>
           <h3 class="event-title" style="margin-top:10px; font-size:1.06rem; line-height:1.3;">${escapeHtml(ev.title)}</h3>
           <ul class="event-meta">
             <li>${ESIcon("calendar")} ${escapeHtml(ev.displayDate)} · ${ESIcon("clock")} ${escapeHtml(ev.time)}</li>
             <li>${ESIcon("pin")} ${escapeHtml(ev.venue)}</li>
-            <li>${ESIcon("users")} ${ev.attendees}+ attending · ${escapeHtml(ev.price)}</li>
+            <li>${ESIcon("users")} ${ES.filled(ev)}+ attending · ${escapeHtml(ev.price)}</li>
           </ul>
+          <div class="es-card-status">${ES.seatBadge(ev)}<span class="es-countdown" data-cd="${escapeHtml(ev.id)}"></span>${rating.count ? `<span class="es-rating-chip">★ ${rating.avg.toFixed(1)} (${rating.count})</span>` : ""}</div>
           <p style="font-size:0.875rem; color:var(--color-text-dim); line-height:1.5; margin:0 0 14px; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;">${escapeHtml(ev.description)}</p>
           <div style="display:flex; gap:8px; margin-top:auto; flex-wrap:wrap;">
             <a href="event-details.html?id=${encodeURIComponent(ev.id)}" class="btn btn-primary btn-small" style="flex:1 1 90px; min-width:0; justify-content:center; padding:9px 14px; font-size:0.82rem;">Details</a>
-            <button type="button" class="btn ${registered ? "btn-secondary" : "btn-outline"} btn-small btn-register" data-id="${escapeHtml(ev.id)}" style="flex:1 1 90px; min-width:0; padding:9px 14px; font-size:0.82rem; white-space:nowrap;">${registered ? "Joined" : "Join"}</button>
+            <button type="button" class="btn ${j.cls} btn-small btn-register" ${j.disabled ? "disabled" : ""} data-id="${escapeHtml(ev.id)}" style="flex:1 1 90px; min-width:0; padding:9px 14px; font-size:0.82rem; white-space:nowrap;">${j.text}</button>
           </div>
         </div>
       `;
       const btn = article.querySelector(".btn-register");
       btn.addEventListener("click", () => {
-        if (!window.isLoggedIn || !window.isLoggedIn()) {
-          window.showToast && window.showToast("Please sign in to register.", "error");
-          setTimeout(() => location.href = "signin.html", 700);
-          return;
-        }
-        const nowRegistered = window.toggleRegistration(ev.id);
-        btn.textContent = nowRegistered ? "Joined" : "Join";
-        btn.className = `btn ${nowRegistered ? "btn-secondary" : "btn-outline"} btn-small btn-register`;
-        window.showToast && window.showToast(nowRegistered ? `Joined ${ev.title}!` : `Left ${ev.title}.`);
-        renderRegistrations();
+        if (!ES.user()) return ES.needLogin();
+        const after = () => render();
+        if (ES.myRecord(ev.id)) ES.cancelWithConfirm(ev, after);
+        else ES.startRegistration(ev, after);
       });
       return article;
     }
 
     function renderRegistrations() {
-      if (!window.getRegistrations) return;
-      const regs = window.getRegistrations();
-      if (regs.length === 0) { registeredSection.style.display = "none"; return; }
-      const items = window.EVENTSPHERE_EVENTS.filter(e => regs.includes(e.id));
+      const recs = ES.myRecords().filter(r => r.status !== "none");
+      const items = recs.map(r => ES.getEvent(r.eventId)).filter(Boolean);
       if (items.length === 0) { registeredSection.style.display = "none"; return; }
       registeredSection.style.display = "block";
       registeredGrid.innerHTML = "";
-      items.forEach(ev => {
-        const c = createCard(ev);
-        registeredGrid.appendChild(c);
-      });
+      items.forEach(ev => registeredGrid.appendChild(createCard(ev)));
     }
 
     function escapeHtml(s){ return String(s).replace(/[&<>"']/g, c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c])); }
@@ -277,6 +321,9 @@
     });
     clearSearch.addEventListener("click", () => { searchInput.value=""; searchQuery=""; render(); searchInput.focus(); });
     sortSelect.addEventListener("change", (e)=>{ sortBy=e.target.value; render(); });
+    whenSelect.addEventListener("change", (e)=>{ whenBy=e.target.value; render(); });
+    priceSelect.addEventListener("change", (e)=>{ priceBy=e.target.value; render(); });
+    document.addEventListener("es:saved-changed", () => { /* heart state is already updated in place */ });
     filterPills.forEach(p => p.addEventListener("click", ()=>{
       filterPills.forEach(x=>x.classList.remove("active"));
       p.classList.add("active");
@@ -285,14 +332,14 @@
       if (activeCategory !== "all") history.replaceState(null,"",`events.html#categories?filter=${activeCategory}`);
     }));
     clearFilters.addEventListener("click", ()=>{
-      activeCategory="all"; searchQuery=""; sortBy="date-asc";
-      searchInput.value=""; sortSelect.value="date-asc";
+      activeCategory="all"; searchQuery=""; sortBy="date-asc"; whenBy="all"; priceBy="all";
+      searchInput.value=""; sortSelect.value="date-asc"; whenSelect.value="all"; priceSelect.value="all";
       filterPills.forEach(x=>x.classList.remove("active"));
       document.querySelector('.filter-pill[data-filter="all"]').classList.add("active");
       render();
     });
     document.getElementById("resetEmpty").addEventListener("click", ()=>{
-      activeCategory="all"; searchQuery=""; searchInput.value=""; sortSelect.value="date-asc";
+      activeCategory="all"; searchQuery=""; searchInput.value=""; sortSelect.value="date-asc"; whenBy="all"; priceBy="all"; whenSelect.value="all"; priceSelect.value="all";
       filterPills.forEach(x=>x.classList.remove("active"));
       document.querySelector('.filter-pill[data-filter="all"]').classList.add("active");
       sortBy="date-asc";

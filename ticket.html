@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EventSphere | My Ticket</title>
+  <meta name="description" content="Your EventSphere QR ticket." />
+  <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Karla:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Unbounded:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <script>
+  (function () {
+    try {
+      var t = null;
+      try { t = localStorage.getItem("eventsphere_theme"); } catch (e) {}
+      if (!t) { try { var m = window.name.match(/(?:^|;)eventsphere_theme=([^;]+)/); if (m) t = m[1]; } catch (e2) {} }
+      if (t === "light") document.documentElement.classList.add("light-mode");
+    } catch (e) {}
+  })();
+</script>
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <header class="site-header" id="site-header">
+    <nav class="navbar" aria-label="Primary navigation">
+      <a href="index.html" class="logo">
+        <span class="logo-mark" aria-hidden="true">
+          <svg viewBox="0 0 40 40" width="32" height="32">
+            <circle cx="20" cy="20" r="7" fill="url(#logoGradient)"/>
+            <ellipse cx="20" cy="20" rx="18" ry="7" fill="none" stroke="url(#logoGradient)" stroke-width="2"/>
+            <defs><linearGradient id="logoGradient" x1="0" y1="0" x2="40" y2="40"><stop offset="0%" stop-color="#f59e0b"/><stop offset="100%" stop-color="#ec4899"/></linearGradient></defs>
+          </svg>
+        </span>
+        <span class="logo-text">Event<span>Sphere</span></span>
+      </a>
+      <button class="nav-toggle" id="navToggle" aria-label="Open navigation menu" aria-expanded="false" aria-controls="primaryMenu">
+        <span class="nav-toggle-bar"></span><span class="nav-toggle-bar"></span><span class="nav-toggle-bar"></span>
+      </button>
+      <div class="nav-menu" id="primaryMenu">
+        <ul class="nav-links">
+          <li><a href="index.html" class="nav-link">Home</a></li>
+          <li><a href="events.html" class="nav-link active">Events</a></li>
+          <li><a href="calendar.html" class="nav-link">Calendar</a></li>
+          <li><a href="categories.html" class="nav-link">Categories</a></li>
+          <li><a href="about.html" class="nav-link">About Us</a></li>
+          <li><a href="contact.html" class="nav-link">Contact Us</a></li>
+        </ul>
+        <div class="nav-actions">
+          <a href="signin.html" class="btn btn-ghost guest-only">Sign In</a>
+          <a href="signup.html" class="btn btn-primary btn-small guest-only">Sign Up</a>
+          <button class="btn btn-ghost auth-only" id="logoutBtn" type="button">Logout</button>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main id="main-content">
+
+    <section class="section" style="padding-top:28px;">
+      <div class="container container-narrow" id="ticketRoot"></div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="logo">
+          <span class="logo-mark" aria-hidden="true">
+            <svg viewBox="0 0 40 40" width="28" height="28">
+              <circle cx="20" cy="20" r="7" fill="url(#footerLogoGradient)"/><ellipse cx="20" cy="20" rx="18" ry="7" fill="none" stroke="url(#footerLogoGradient)" stroke-width="2"/>
+              <defs><linearGradient id="footerLogoGradient" x1="0" y1="0" x2="40" y2="40"><stop offset="0%" stop-color="#f59e0b"/><stop offset="100%" stop-color="#ec4899"/></linearGradient></defs>
+            </svg>
+          </span>
+          <span class="logo-text">Event<span>Sphere</span></span>
+        </a>
+        <p class="footer-tagline">The campus event management portal built for students, by students.</p>
+        <div class="social-icons"><a href="#" aria-label="Instagram"><svg class="icon"><use href="#i-instagram"/></svg></a><a href="#" aria-label="LinkedIn"><svg class="icon"><use href="#i-linkedin"/></svg></a><a href="#" aria-label="Twitter"><svg class="icon"><use href="#i-twitter"/></svg></a><a href="#" aria-label="YouTube"><svg class="icon"><use href="#i-youtube"/></svg></a></div>
+      </div>
+      <nav class="footer-col" aria-label="Quick links"><h3>Quick Links</h3><ul><li><a href="index.html">Home</a></li><li><a href="events.html">Events</a></li><li><a href="calendar.html">Calendar</a></li><li><a href="dashboard.html">My Dashboard</a></li><li><a href="about.html">About Us</a></li><li><a href="contact.html">Contact Us</a></li><li><a href="admin.html">Admin</a></li></ul></nav>
+      <nav class="footer-col" aria-label="About"><h3>About</h3><ul><li><a href="about.html">Our Mission</a></li><li><a href="about.html#team">Our Team</a></li><li><a href="signup.html">Join EventSphere</a></li></ul></nav>
+      <nav class="footer-col" aria-label="Legal"><h3>Legal</h3><ul><li><a href="#">Privacy Policy</a></li><li><a href="#">Terms & Conditions</a></li><li><a href="contact.html">Support</a></li></ul></nav>
+    </div>
+    <div class="footer-bottom"><p>&copy; 2026 EventSphere. All rights reserved. Built for academic project purposes.</p></div>
+  </footer>
+
+  <script src="js/icons.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/events.js"></script>
+  <script src="js/store.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/qrcode.js"></script>
+  <script>
+
+    const ES = window.ES, e = ES.esc;
+    const root = document.getElementById("ticketRoot");
+    const code = (new URLSearchParams(location.search).get("id") || "").toUpperCase();
+    const rec = ES.allRegs().find(r => r.ticketId === code);
+    const u = ES.user();
+
+    function qrFor(rec) {
+      const q = qrcode(0, "M");
+      q.addData("EVENTSPHERE|" + rec.ticketId + "|" + rec.eventId + "|" + rec.email);
+      q.make();
+      return q;
+    }
+
+    if (!rec || (!u && !ES.admin.isAuthed()) || (u && rec.userId !== u.id && !ES.admin.isAuthed())) {
+      root.innerHTML = `<div class="es-empty"><h2>${!u ? "Sign in to view your ticket" : "Ticket not found"}</h2><p>${!u ? "Tickets are tied to the account that registered." : "This ticket doesn't exist in this browser or belongs to another account."}</p><a class="btn btn-primary" href="${!u ? "signin.html?next=" + encodeURIComponent("ticket.html?id=" + code) : "dashboard.html"}">${!u ? "Sign in" : "Back to dashboard"}</a></div>`;
+    } else {
+      const ev = ES.getEvent(rec.eventId);
+      if (!ev) { root.innerHTML = `<div class="es-empty"><h2>This event was removed</h2><a class="btn btn-primary" href="dashboard.html">Back to dashboard</a></div>`; }
+      else {
+        const q = qrFor(rec);
+        const svg = q.createSvgTag({ cellSize: 6, margin: 0, scalable: true });
+        const valid = rec.status === "registered";
+        root.innerHTML = `
+          <a href="dashboard.html" class="es-back">← My dashboard</a>
+          <div class="es-ticket ${rec.attended ? "used" : ""}" id="ticketCard">
+            <div class="es-ticket-main">
+              <div class="es-ticket-brand">${ESIcon("sparkles")} EventSphere · Chitkara University</div>
+              <span class="pill ${ev.pill}">${e(ev.category)}</span>
+              <h1>${e(ev.title)}</h1>
+              <ul class="es-ticket-meta">
+                <li>${ESIcon("calendar")}<span><small>Date</small>${e(ev.displayDate)}</span></li>
+                <li>${ESIcon("clock")}<span><small>Time</small>${e(ev.time)} – ${e(ev.endTime)}</span></li>
+                <li>${ESIcon("pin")}<span><small>Venue</small>${e(ev.venue)}</span></li>
+                <li>${ESIcon("users")}<span><small>Attendee</small>${e(rec.name)}</span></li>
+              </ul>
+              ${rec.team ? `<p class="es-ticket-team"><strong>Team ${e(rec.team.name)}</strong> · ${e([rec.name].concat(rec.team.members).join(", "))}</p>` : ""}
+              <div class="es-ticket-foot"><span>Admit one · bring your college ID</span><span>${rec.paid ? "Paid ₹" + rec.paid + " (demo)" : e(ev.price)}</span></div>
+            </div>
+            <div class="es-ticket-stub">
+              <div class="es-qr" role="img" aria-label="QR code for ticket ${e(rec.ticketId)}">${svg}</div>
+              <div class="es-ticket-code">${e(rec.ticketId)}</div>
+              <div class="es-ticket-status ${rec.attended ? "in" : valid ? "ok" : "wait"}">${rec.attended ? "✓ CHECKED IN" : valid ? "VALID" : "WAITLIST — NOT VALID"}</div>
+            </div>
+          </div>
+          <div class="es-ticket-actions">
+            <button class="btn btn-primary" id="dlPng">Download PNG</button>
+            <button class="btn btn-outline" id="printBtn">Print / Save as PDF</button>
+            <a class="btn btn-ghost" href="event-details.html?id=${encodeURIComponent(ev.id)}">Event page</a>
+            ${rec.attended ? `<a class="btn btn-secondary" href="certificate.html?id=${encodeURIComponent(rec.ticketId)}">Get certificate</a>` : ""}
+          </div>
+          <p class="es-muted" style="margin-top:14px;font-size:.85rem;">Show this QR at the entrance. The organizer scans it (or types the code) in the admin check-in page to mark you present — that unlocks your certificate.</p>`;
+
+        document.getElementById("printBtn").addEventListener("click", () => window.print());
+        document.getElementById("dlPng").addEventListener("click", async () => {
+        const canvasToBlob = (canvas) => new Promise((resolve) => canvas.toBlob(resolve, "image/png"));
+          const W = 1100, H = 440, c = document.createElement("canvas");
+          c.width = W; c.height = H;
+          const x = c.getContext("2d");
+          const g = x.createLinearGradient(0, 0, W, H);
+          g.addColorStop(0, "#13161f"); g.addColorStop(1, "#1a1e2a");
+          x.fillStyle = g; x.fillRect(0, 0, W, H);
+          x.fillStyle = "#f59e0b"; x.fillRect(0, 0, 10, H);
+          x.fillStyle = "#8b93a8"; x.font = "600 16px sans-serif"; x.fillText("EVENTSPHERE · CHITKARA UNIVERSITY", 50, 60);
+          x.fillStyle = "#eef0f6"; x.font = "700 40px sans-serif";
+          const words = ev.title.split(" "); let line = "", y = 120;
+          words.forEach(w => { const t = line + w + " "; if (x.measureText(t).width > 640 && line) { x.fillText(line, 50, y); line = w + " "; y += 48; } else line = t; });
+          x.fillText(line, 50, y);
+          x.font = "400 22px sans-serif"; x.fillStyle = "#c9cfdd";
+          const info = [ev.displayDate + " · " + ev.time + " – " + ev.endTime, ev.venue, "Attendee: " + rec.name];
+          info.forEach((t, i) => x.fillText(t, 50, y + 54 + i * 36));
+          x.fillStyle = "#f59e0b"; x.font = "600 20px sans-serif"; x.fillText(rec.attended ? "CHECKED IN" : valid ? "VALID — ADMIT ONE" : "WAITLIST", 50, H - 36);
+          x.setLineDash([8, 8]); x.strokeStyle = "#3a4158"; x.beginPath(); x.moveTo(760, 24); x.lineTo(760, H - 24); x.stroke(); x.setLineDash([]);
+          const n = q.getModuleCount(), size = 260, cs = size / n, ox = 800, oy = 60;
+          x.fillStyle = "#fff"; x.fillRect(ox - 14, oy - 14, size + 28, size + 28);
+          x.fillStyle = "#0c0a09";
+          for (let r = 0; r < n; r++) for (let k = 0; k < n; k++) if (q.isDark(r, k)) x.fillRect(ox + k * cs, oy + r * cs, Math.ceil(cs), Math.ceil(cs));
+          x.fillStyle = "#eef0f6"; x.font = "600 22px monospace"; x.textAlign = "center"; x.fillText(rec.ticketId, ox + size / 2, oy + size + 52);
+          const b = await canvasToBlob(c);
+        const a = document.createElement("a"); a.href = URL.createObjectURL(b); a.download = "ticket-" + rec.ticketId + ".png"; a.click();
+        setTimeout(() => URL.revokeObjectURL(a.href), 800);
+        });
+      }
+    }
+
+  </script>
+</body>
+</html>

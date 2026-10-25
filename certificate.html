@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EventSphere | Certificate</title>
+  <meta name="description" content="Your EventSphere participation certificate." />
+  <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Karla:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Unbounded:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <script>
+  (function () {
+    try {
+      var t = null;
+      try { t = localStorage.getItem("eventsphere_theme"); } catch (e) {}
+      if (!t) { try { var m = window.name.match(/(?:^|;)eventsphere_theme=([^;]+)/); if (m) t = m[1]; } catch (e2) {} }
+      if (t === "light") document.documentElement.classList.add("light-mode");
+    } catch (e) {}
+  })();
+</script>
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <header class="site-header" id="site-header">
+    <nav class="navbar" aria-label="Primary navigation">
+      <a href="index.html" class="logo">
+        <span class="logo-mark" aria-hidden="true">
+          <svg viewBox="0 0 40 40" width="32" height="32">
+            <circle cx="20" cy="20" r="7" fill="url(#logoGradient)"/>
+            <ellipse cx="20" cy="20" rx="18" ry="7" fill="none" stroke="url(#logoGradient)" stroke-width="2"/>
+            <defs><linearGradient id="logoGradient" x1="0" y1="0" x2="40" y2="40"><stop offset="0%" stop-color="#f59e0b"/><stop offset="100%" stop-color="#ec4899"/></linearGradient></defs>
+          </svg>
+        </span>
+        <span class="logo-text">Event<span>Sphere</span></span>
+      </a>
+      <button class="nav-toggle" id="navToggle" aria-label="Open navigation menu" aria-expanded="false" aria-controls="primaryMenu">
+        <span class="nav-toggle-bar"></span><span class="nav-toggle-bar"></span><span class="nav-toggle-bar"></span>
+      </button>
+      <div class="nav-menu" id="primaryMenu">
+        <ul class="nav-links">
+          <li><a href="index.html" class="nav-link">Home</a></li>
+          <li><a href="events.html" class="nav-link active">Events</a></li>
+          <li><a href="calendar.html" class="nav-link">Calendar</a></li>
+          <li><a href="categories.html" class="nav-link">Categories</a></li>
+          <li><a href="about.html" class="nav-link">About Us</a></li>
+          <li><a href="contact.html" class="nav-link">Contact Us</a></li>
+        </ul>
+        <div class="nav-actions">
+          <a href="signin.html" class="btn btn-ghost guest-only">Sign In</a>
+          <a href="signup.html" class="btn btn-primary btn-small guest-only">Sign Up</a>
+          <button class="btn btn-ghost auth-only" id="logoutBtn" type="button">Logout</button>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main id="main-content">
+
+    <section class="section" style="padding-top:28px;">
+      <div class="container" id="certRoot"></div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="logo">
+          <span class="logo-mark" aria-hidden="true">
+            <svg viewBox="0 0 40 40" width="28" height="28">
+              <circle cx="20" cy="20" r="7" fill="url(#footerLogoGradient)"/><ellipse cx="20" cy="20" rx="18" ry="7" fill="none" stroke="url(#footerLogoGradient)" stroke-width="2"/>
+              <defs><linearGradient id="footerLogoGradient" x1="0" y1="0" x2="40" y2="40"><stop offset="0%" stop-color="#f59e0b"/><stop offset="100%" stop-color="#ec4899"/></linearGradient></defs>
+            </svg>
+          </span>
+          <span class="logo-text">Event<span>Sphere</span></span>
+        </a>
+        <p class="footer-tagline">The campus event management portal built for students, by students.</p>
+        <div class="social-icons"><a href="#" aria-label="Instagram"><svg class="icon"><use href="#i-instagram"/></svg></a><a href="#" aria-label="LinkedIn"><svg class="icon"><use href="#i-linkedin"/></svg></a><a href="#" aria-label="Twitter"><svg class="icon"><use href="#i-twitter"/></svg></a><a href="#" aria-label="YouTube"><svg class="icon"><use href="#i-youtube"/></svg></a></div>
+      </div>
+      <nav class="footer-col" aria-label="Quick links"><h3>Quick Links</h3><ul><li><a href="index.html">Home</a></li><li><a href="events.html">Events</a></li><li><a href="calendar.html">Calendar</a></li><li><a href="dashboard.html">My Dashboard</a></li><li><a href="about.html">About Us</a></li><li><a href="contact.html">Contact Us</a></li><li><a href="admin.html">Admin</a></li></ul></nav>
+      <nav class="footer-col" aria-label="About"><h3>About</h3><ul><li><a href="about.html">Our Mission</a></li><li><a href="about.html#team">Our Team</a></li><li><a href="signup.html">Join EventSphere</a></li></ul></nav>
+      <nav class="footer-col" aria-label="Legal"><h3>Legal</h3><ul><li><a href="#">Privacy Policy</a></li><li><a href="#">Terms & Conditions</a></li><li><a href="contact.html">Support</a></li></ul></nav>
+    </div>
+    <div class="footer-bottom"><p>&copy; 2026 EventSphere. All rights reserved. Built for academic project purposes.</p></div>
+  </footer>
+
+  <script src="js/icons.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/events.js"></script>
+  <script src="js/store.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/qrcode.js"></script>
+  <script>
+
+    const ES = window.ES, e = ES.esc;
+    const root = document.getElementById("certRoot");
+    const code = (new URLSearchParams(location.search).get("id") || "").toUpperCase();
+    const rec = ES.allRegs().find(r => r.ticketId === code);
+    const u = ES.user();
+    const ev = rec && ES.getEvent(rec.eventId);
+
+    if (!rec || !ev || (!u && !ES.admin.isAuthed()) || (u && rec.userId !== u.id && !ES.admin.isAuthed())) {
+      root.innerHTML = `<div class="es-empty"><h2>Certificate not found</h2><p>Sign in with the account that attended the event.</p><a class="btn btn-primary" href="dashboard.html">Back to dashboard</a></div>`;
+    } else if (!rec.attended) {
+      root.innerHTML = `<div class="es-empty"><h2>Certificate locked</h2><p>Certificates are issued after the organizer checks you in at the venue. Show your QR ticket at the entrance.</p><a class="btn btn-primary" href="ticket.html?id=${encodeURIComponent(rec.ticketId)}">Open my ticket</a></div>`;
+    } else {
+      const certId = "CERT-" + rec.ticketId.replace("ES-", "");
+      const date = new Date(rec.attendedAt || Date.now()).toLocaleDateString("en-IN", { day: "numeric", month: "long", year: "numeric" });
+      const q = qrcode(0, "M"); q.addData("EVENTSPHERE-CERT|" + certId + "|" + rec.email); q.make();
+      root.innerHTML = `
+        <a href="dashboard.html" class="es-back">← My dashboard</a>
+        <div class="es-cert-wrap"><div class="es-cert" id="certCard">
+          <div class="es-cert-inner">
+            <div class="es-cert-brand">${ESIcon("sparkles")} EventSphere</div>
+            <p class="es-cert-kicker">Certificate of Participation</p>
+            <p class="es-cert-line">This is proudly presented to</p>
+            <h1 class="es-cert-name">${e(rec.name)}</h1>
+            <p class="es-cert-line">for attending and participating in</p>
+            <h2 class="es-cert-event">${e(ev.title)}</h2>
+            <p class="es-cert-line">${e(ev.category)} event organised by ${e(ev.organizer)} at ${e(ev.venue)}, Chitkara University, on ${e(ev.displayDate)}.</p>
+            <div class="es-cert-foot">
+              <div class="es-cert-sign"><span class="es-cert-sig">EventSphere</span><small>Event Coordinator</small></div>
+              <div class="es-cert-qr">${q.createSvgTag({ cellSize: 3, margin: 0, scalable: true })}<small>${e(certId)}</small></div>
+              <div class="es-cert-sign"><span class="es-cert-sig">${e(date)}</span><small>Date of issue</small></div>
+            </div>
+          </div>
+        </div></div>
+        <div class="es-ticket-actions" style="justify-content:center;">
+          <button class="btn btn-primary" id="dlPng">Download PNG</button>
+          <button class="btn btn-outline" id="printBtn">Print / Save as PDF</button>
+        </div>`;
+      document.getElementById("printBtn").addEventListener("click", () => window.print());
+      document.getElementById("dlPng").addEventListener("click", async () => {
+        const canvasToBlob = (canvas) => new Promise((resolve) => canvas.toBlob(resolve, "image/png"));
+        const W = 1600, H = 1131, c = document.createElement("canvas"); c.width = W; c.height = H;
+        const x = c.getContext("2d");
+        x.fillStyle = "#fffdf7"; x.fillRect(0, 0, W, H);
+        x.strokeStyle = "#f59e0b"; x.lineWidth = 14; x.strokeRect(40, 40, W - 80, H - 80);
+        x.strokeStyle = "#1a1e2a"; x.lineWidth = 3; x.strokeRect(70, 70, W - 140, H - 140);
+        x.textAlign = "center"; x.fillStyle = "#b45309"; x.font = "700 34px sans-serif"; x.fillText("EVENTSPHERE", W / 2, 170);
+        x.fillStyle = "#1a1e2a"; x.font = "700 78px serif"; x.fillText("Certificate of Participation", W / 2, 290);
+        x.fillStyle = "#475569"; x.font = "400 30px sans-serif"; x.fillText("This is proudly presented to", W / 2, 380);
+        x.fillStyle = "#0f172a"; x.font = "italic 700 100px serif"; x.fillText(rec.name, W / 2, 510);
+        x.fillStyle = "#f59e0b"; x.fillRect(W / 2 - 260, 540, 520, 5);
+        x.fillStyle = "#475569"; x.font = "400 30px sans-serif"; x.fillText("for attending and participating in", W / 2, 610);
+        x.fillStyle = "#0f172a"; x.font = "700 62px sans-serif"; x.fillText(ev.title, W / 2, 700);
+        x.fillStyle = "#475569"; x.font = "400 28px sans-serif";
+        x.fillText(ev.category + " event organised by " + ev.organizer + " at " + ev.venue + ",", W / 2, 770);
+        x.fillText("Chitkara University, on " + ev.displayDate + ".", W / 2, 810);
+        x.fillStyle = "#0f172a"; x.font = "italic 700 38px serif"; x.fillText("EventSphere", 340, 950); x.fillText(date, W - 340, 950);
+        x.strokeStyle = "#0f172a"; x.lineWidth = 2;
+        [[220, 460], [W - 460, W - 220]].forEach(p => { x.beginPath(); x.moveTo(p[0], 970); x.lineTo(p[1], 970); x.stroke(); });
+        x.fillStyle = "#475569"; x.font = "400 24px sans-serif"; x.fillText("Event Coordinator", 340, 1005); x.fillText("Date of issue", W - 340, 1005);
+        const n = q.getModuleCount(), size = 150, cs = size / n, ox = W / 2 - size / 2, oy = 880;
+        x.fillStyle = "#0c0a09";
+        for (let r = 0; r < n; r++) for (let k = 0; k < n; k++) if (q.isDark(r, k)) x.fillRect(ox + k * cs, oy + r * cs, Math.ceil(cs), Math.ceil(cs));
+        x.fillStyle = "#475569"; x.font = "500 20px monospace"; x.fillText(certId, W / 2, oy + size + 30);
+        const b = await canvasToBlob(c);
+        const a = document.createElement("a"); a.href = URL.createObjectURL(b); a.download = "certificate-" + certId + ".png"; a.click();
+        setTimeout(() => URL.revokeObjectURL(a.href), 800);
+      });
+    }
+
+  </script>
+</body>
+</html>

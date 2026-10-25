@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EventSphere | Admin Panel</title>
+  <meta name="description" content="Organizer panel: manage events, registrations, check-ins and analytics." />
+  <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Karla:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Unbounded:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <script>
+  (function () {
+    try {
+      var t = null;
+      try { t = localStorage.getItem("eventsphere_theme"); } catch (e) {}
+      if (!t) { try { var m = window.name.match(/(?:^|;)eventsphere_theme=([^;]+)/); if (m) t = m[1]; } catch (e2) {} }
+      if (t === "light") document.documentElement.classList.add("light-mode");
+    } catch (e) {}
+  })();
+</script>
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <header class="site-header" id="site-header">
+    <nav class="navbar" aria-label="Primary navigation">
+      <a href="index.html" class="logo">
+        <span class="logo-mark" aria-hidden="true">
+          <svg viewBox="0 0 40 40" width="32" height="32">
+            <circle cx="20" cy="20" r="7" fill="url(#logoGradient)"/>
+            <ellipse cx="20" cy="20" rx="18" ry="7" fill="none" stroke="url(#logoGradient)" stroke-width="2"/>
+            <defs><linearGradient id="logoGradient" x1="0" y1="0" x2="40" y2="40"><stop offset="0%" stop-color="#f59e0b"/><stop offset="100%" stop-color="#ec4899"/></linearGradient></defs>
+          </svg>
+        </span>
+        <span class="logo-text">Event<span>Sphere</span></span>
+      </a>
+      <button class="nav-toggle" id="navToggle" aria-label="Open navigation menu" aria-expanded="false" aria-controls="primaryMenu">
+        <span class="nav-toggle-bar"></span><span class="nav-toggle-bar"></span><span class="nav-toggle-bar"></span>
+      </button>
+      <div class="nav-menu" id="primaryMenu">
+        <ul class="nav-links">
+          <li><a href="index.html" class="nav-link">Home</a></li>
+          <li><a href="events.html" class="nav-link active">Events</a></li>
+          <li><a href="calendar.html" class="nav-link">Calendar</a></li>
+          <li><a href="categories.html" class="nav-link">Categories</a></li>
+          <li><a href="about.html" class="nav-link">About Us</a></li>
+          <li><a href="contact.html" class="nav-link">Contact Us</a></li>
+        </ul>
+        <div class="nav-actions">
+          <a href="signin.html" class="btn btn-ghost guest-only">Sign In</a>
+          <a href="signup.html" class="btn btn-primary btn-small guest-only">Sign Up</a>
+          <button class="btn btn-ghost auth-only" id="logoutBtn" type="button">Logout</button>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main id="main-content">
+
+    <section class="page-hero">
+      <div class="container">
+        <p class="eyebrow">Organizer Tools</p>
+        <h1>Admin Panel</h1>
+        <p class="page-hero-sub">Manage events, view registrations, check attendees in and export data. Everything is stored in this browser only.</p>
+      </div>
+    </section>
+    <section class="section" style="padding-top:12px;">
+      <div class="container" id="adminRoot"></div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="logo">
+          <span class="logo-mark" aria-hidden="true">
+            <svg viewBox="0 0 40 40" width="28" height="28">
+              <circle cx="20" cy="20" r="7" fill="url(#footerLogoGradient)"/><ellipse cx="20" cy="20" rx="18" ry="7" fill="none" stroke="url(#footerLogoGradient)" stroke-width="2"/>
+              <defs><linearGradient id="footerLogoGradient" x1="0" y1="0" x2="40" y2="40"><stop offset="0%" stop-color="#f59e0b"/><stop offset="100%" stop-color="#ec4899"/></linearGradient></defs>
+            </svg>
+          </span>
+          <span class="logo-text">Event<span>Sphere</span></span>
+        </a>
+        <p class="footer-tagline">The campus event management portal built for students, by students.</p>
+        <div class="social-icons"><a href="#" aria-label="Instagram"><svg class="icon"><use href="#i-instagram"/></svg></a><a href="#" aria-label="LinkedIn"><svg class="icon"><use href="#i-linkedin"/></svg></a><a href="#" aria-label="Twitter"><svg class="icon"><use href="#i-twitter"/></svg></a><a href="#" aria-label="YouTube"><svg class="icon"><use href="#i-youtube"/></svg></a></div>
+      </div>
+      <nav class="footer-col" aria-label="Quick links"><h3>Quick Links</h3><ul><li><a href="index.html">Home</a></li><li><a href="events.html">Events</a></li><li><a href="calendar.html">Calendar</a></li><li><a href="dashboard.html">My Dashboard</a></li><li><a href="about.html">About Us</a></li><li><a href="contact.html">Contact Us</a></li><li><a href="admin.html">Admin</a></li></ul></nav>
+      <nav class="footer-col" aria-label="About"><h3>About</h3><ul><li><a href="about.html">Our Mission</a></li><li><a href="about.html#team">Our Team</a></li><li><a href="signup.html">Join EventSphere</a></li></ul></nav>
+      <nav class="footer-col" aria-label="Legal"><h3>Legal</h3><ul><li><a href="#">Privacy Policy</a></li><li><a href="#">Terms & Conditions</a></li><li><a href="contact.html">Support</a></li></ul></nav>
+    </div>
+    <div class="footer-bottom"><p>&copy; 2026 EventSphere. All rights reserved. Built for academic project purposes.</p></div>
+  </footer>
+
+  <script src="js/icons.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/events.js"></script>
+  <script src="js/store.js"></script>
+  <script src="js/main.js"></script>
+  <script>
+
+    const ES = window.ES, e = ES.esc;
+    const root = document.getElementById("adminRoot");
+    const COLORS = { Technical: "#2F5CFF", Cultural: "#8B5CF6", Sports: "#34d399", Workshops: "#f59e0b", Competitions: "#fb7185" };
+    const IMAGES = ["", "images/hackathon1.jpeg", "images/latenight-hackathon.jpeg", "images/concert.jpeg", "images/bigfest.jpg", "images/session.jpeg", "images/public-speaking.jpeg", "images/sports.jpeg", "images/esports.jpg", "images/aiexpo.jpg", "images/pitchdeck.jpg", "images/yogamat.jpg", "images/clgphotograph.jpeg"];
+    let tab = "overview", regEvent = "all", regQuery = "";
+
+    function gate() {
+      root.innerHTML = `<form class="form-card es-admin-gate" id="gate" novalidate>
+        <h1 style="font-size:1.5rem;">Admin sign-in</h1>
+        <p class="subtitle">Demo passcode: <code>${e(ES.admin.pass)}</code> (kept only for this tab's session).</p>
+        <div class="form-group"><label for="pass">Passcode</label><input id="pass" type="password" autocomplete="off" /></div>
+        <p class="es-form-error" id="gErr" role="alert"></p>
+        <button class="btn btn-primary btn-block" type="submit">Unlock admin panel</button></form>`;
+      document.getElementById("gate").addEventListener("submit", (ev) => {
+        ev.preventDefault();
+        if (ES.admin.login(document.getElementById("pass").value)) draw();
+        else document.getElementById("gErr").textContent = "Wrong passcode.";
+      });
+    }
+
+    /* ---------- inline SVG charts ---------- */
+    function barChart(rows) {
+      const max = Math.max.apply(null, rows.map(r => r.cap).concat([1]));
+      return `<div class="es-bars">${rows.map(r => `<div class="es-bar-row" title="${e(r.label)}: ${r.filled} of ${r.cap}">
+        <span class="es-bar-label">${e(r.label)}</span>
+        <div class="es-bar-track"><div class="es-bar-cap" style="width:100%"><div class="es-bar-fill" style="width:${Math.min(100, (r.filled / r.cap) * 100)}%;background:${r.color}"></div></div></div>
+        <span class="es-bar-val">${r.filled}/${r.cap}</span></div>`).join("")}</div>`;
+    }
+    function donut(parts) {
+      const total = parts.reduce((s, p) => s + p.v, 0) || 1, R = 15.9155; let off = 25;
+      const segs = parts.filter(p => p.v > 0).map(p => { const len = (p.v / total) * 100; const s = `<circle r="${R}" cx="21" cy="21" fill="transparent" stroke="${p.c}" stroke-width="6" stroke-dasharray="${len} ${100 - len}" stroke-dashoffset="${off}"></circle>`; off -= len; return s; }).join("");
+      return `<div class="es-donut-wrap"><svg viewBox="0 0 42 42" class="es-donut" role="img" aria-label="Events by category"><circle r="${R}" cx="21" cy="21" fill="transparent" stroke="var(--color-border)" stroke-width="6"></circle>${segs}<text x="21" y="22.5" text-anchor="middle" class="es-donut-n">${total}</text></svg>
+        <ul class="es-donut-leg">${parts.map(p => `<li><i style="background:${p.c}"></i>${e(p.l)} <strong>${p.v}</strong></li>`).join("")}</ul></div>`;
+    }
+    function dayBars(days) {
+      const max = Math.max.apply(null, days.map(d => d.v).concat([1]));
+      return `<div class="es-days">${days.map(d => `<div class="es-daycol" title="${d.label}: ${d.v}"><div class="es-daybar"><span style="height:${(d.v / max) * 100}%"></span></div><small>${d.short}</small></div>`).join("")}</div>`;
+    }
+
+    function overview() {
+      const evs = ES.events, regs = ES.allRegs();
+      const conf = regs.filter(r => r.status === "registered");
+      const cap = evs.reduce((s, x) => s + ES.capacity(x), 0), fil = evs.reduce((s, x) => s + ES.filled(x), 0);
+      const revenue = regs.reduce((s, r) => s + (r.paid || 0), 0);
+      const cats = ES.CATEGORIES.map(c => ({ l: c, c: COLORS[c], v: evs.filter(x => x.category === c).length }));
+      const today = ES.toISO(new Date()), days = [];
+      for (let i = 13; i >= 0; i--) {
+        const iso = ES.addDays(today, -i), d = ES.parseDate(iso);
+        days.push({ label: ES.fmtDate(iso), short: d.getDate(), v: regs.filter(r => ES.toISO(new Date(r.ts)) === iso).length });
+      }
+      const top = evs.slice().sort((a, b) => ES.filled(b) / ES.capacity(b) - ES.filled(a) / ES.capacity(a)).slice(0, 12)
+        .map(x => ({ label: x.title, filled: ES.filled(x), cap: ES.capacity(x), color: COLORS[x.category] }));
+      return `<div class="es-stat-grid es-stat-grid-6">
+          <div class="es-stat"><strong>${evs.length}</strong><span>Events</span></div>
+          <div class="es-stat"><strong>${fil}<small>/${cap}</small></strong><span>Seats filled</span></div>
+          <div class="es-stat"><strong>${conf.length}</strong><span>Registrations here</span></div>
+          <div class="es-stat"><strong>${regs.filter(r => r.status === "waitlist").length}</strong><span>On waitlists</span></div>
+          <div class="es-stat"><strong>${conf.filter(r => r.attended).length}</strong><span>Checked in</span></div>
+          <div class="es-stat"><strong>₹${revenue}</strong><span>Demo revenue</span></div></div>
+        <div class="es-chart-grid">
+          <div class="aside-card"><h3>Seat fill by event</h3><p class="es-muted" style="font-size:.8rem;margin-bottom:12px;">Each bar shows how full the event is (seats taken ÷ capacity).</p>${barChart(top)}</div>
+          <div class="aside-card"><h3>Events by category</h3>${donut(cats)}
+            <h3 style="margin-top:24px;">Registrations — last 14 days</h3><p class="es-muted" style="font-size:.8rem;margin-bottom:8px;">From this browser's data.</p>${dayBars(days)}</div>
+        </div>`;
+    }
+
+    /* ---------- events tab ---------- */
+    function eventsTab() {
+      const rows = ES.events.slice().sort((a, b) => ES.startAt(a) - ES.startAt(b)).map(x => `<tr>
+        <td><strong>${e(x.title)}</strong><br><span class="es-muted">${e(x.venue)}</span></td>
+        <td><span class="pill ${x.pill}">${e(x.category)}</span></td>
+        <td>${e(x.displayDate)}<br><span class="es-muted">${e(x.time)}</span></td>
+        <td>${ES.filled(x)} / ${ES.capacity(x)}</td><td>${e(x.price)}</td>
+        <td class="es-td-actions"><button class="btn btn-outline btn-small" data-edit="${e(x.id)}">Edit</button><button class="btn btn-ghost btn-small" data-del="${e(x.id)}">Delete</button></td></tr>`).join("");
+      return `<div class="es-toolbar-row"><button class="btn btn-primary" id="addEvent">+ Add event</button><button class="btn btn-ghost" id="restore">Restore default events</button></div>
+        <div class="es-table-wrap"><table class="es-table"><thead><tr><th>Event</th><th>Category</th><th>When</th><th>Seats</th><th>Price</th><th></th></tr></thead><tbody>${rows || `<tr><td colspan="6">No events. Add one!</td></tr>`}</tbody></table></div>`;
+    }
+
+    function eventForm(x) {
+      const isNew = !x;
+      x = x || { title: "", category: "Technical", date: ES.addDays(ES.toISO(new Date()), 7), time: "10:00 AM", endTime: "1:00 PM", venue: "", price: "Free", capacity: 100, image: "", description: "", organizer: "", tags: [] };
+      ES.modal(`<button class="es-modal-x" data-close aria-label="Close">✕</button><h3>${isNew ? "Add event" : "Edit event"}</h3>
+        <form id="evForm" novalidate class="es-grid-form">
+          <div class="form-group span2"><label for="fTitle">Title</label><input id="fTitle" value="${e(x.title)}" maxlength="80"></div>
+          <div class="form-group"><label for="fCat">Category</label><select id="fCat">${ES.CATEGORIES.map(c => `<option ${c === x.category ? "selected" : ""}>${c}</option>`).join("")}</select></div>
+          <div class="form-group"><label for="fDate">Date</label><input id="fDate" type="date" value="${e(x.date)}"></div>
+          <div class="form-group"><label for="fStart">Starts</label><input id="fStart" type="time" value="${ES.to24h(x.time)}"></div>
+          <div class="form-group"><label for="fEnd">Ends</label><input id="fEnd" type="time" value="${ES.to24h(x.endTime || x.time)}"></div>
+          <div class="form-group"><label for="fVenue">Venue</label><input id="fVenue" value="${e(x.venue)}"></div>
+          <div class="form-group"><label for="fPrice">Price (e.g. Free, ₹99, ₹199 / team)</label><input id="fPrice" value="${e(x.price)}"></div>
+          <div class="form-group"><label for="fCap">Capacity (seats)</label><input id="fCap" type="number" min="1" value="${ES.capacity(x)}"></div>
+          <div class="form-group"><label for="fImg">Poster</label><select id="fImg">${IMAGES.map(i => `<option value="${i}" ${i === (x.image || "") ? "selected" : ""}>${i ? i.replace("images/", "") : "No image (icon)"}</option>`).join("")}</select></div>
+          <div class="form-group span2"><label for="fOrg">Organizer</label><input id="fOrg" value="${e(x.organizer || "")}"></div>
+          <div class="form-group span2"><label for="fTags">Tags (comma separated — use “Team 2–4” to make it a team event)</label><input id="fTags" value="${e((x.tags || []).join(", "))}"></div>
+          <div class="form-group span2"><label for="fDesc">Description</label><textarea id="fDesc" rows="3">${e(x.description || "")}</textarea></div>
+          <p class="es-form-error span2" id="fErr" role="alert"></p>
+          <div class="es-modal-actions span2"><button type="button" class="btn btn-ghost" data-close>Cancel</button><button class="btn btn-primary" type="submit">${isNew ? "Create event" : "Save changes"}</button></div>
+        </form>`, (box) => {
+        box.querySelector("#evForm").addEventListener("submit", (ev) => {
+          ev.preventDefault();
+          const g = (i) => box.querySelector("#" + i).value.trim();
+          const err = box.querySelector("#fErr");
+          if (g("fTitle").length < 3) return err.textContent = "Title is required (min 3 characters).";
+          if (!g("fDate") || !g("fStart") || !g("fEnd")) return err.textContent = "Date, start and end time are required.";
+          if (g("fEnd") <= g("fStart")) return err.textContent = "End time must be after start time.";
+          if (!g("fVenue")) return err.textContent = "Venue is required.";
+          if (!(Number(g("fCap")) >= 1)) return err.textContent = "Capacity must be at least 1.";
+          const cat = g("fCat"), meta = ES.CAT[cat];
+          const data = { id: x.id || (g("fTitle").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") + "-" + Date.now().toString(36).slice(-4)),
+            title: g("fTitle"), category: cat, pill: meta.pill, poster: meta.poster, icon: meta.icon, date: g("fDate"), time: ES.to12h(g("fStart")), endTime: ES.to12h(g("fEnd")),
+            venue: g("fVenue"), price: g("fPrice") || "Free", capacity: Number(g("fCap")), image: g("fImg"), organizer: g("fOrg") || "Campus Admin",
+            tags: g("fTags").split(",").map(t => t.trim()).filter(Boolean), description: g("fDesc") || g("fTitle"), longDescription: g("fDesc") || g("fTitle") };
+          if (isNew) data.attendees = 0;
+          ES.admin.saveEvent(data);
+          ES.closeModal(); window.showToast(isNew ? "Event created." : "Event updated."); draw();
+        });
+      });
+    }
+
+    /* ---------- registrations tab ---------- */
+    function filteredRegs() {
+      let list = ES.allRegs().slice().sort((a, b) => b.ts - a.ts);
+      if (regEvent !== "all") list = list.filter(r => r.eventId === regEvent);
+      if (regQuery) { const q = regQuery.toLowerCase(); list = list.filter(r => (r.name + " " + r.email + " " + r.ticketId).toLowerCase().includes(q)); }
+      return list;
+    }
+    function regsTab() {
+      const list = filteredRegs();
+      return `<div class="es-toolbar-row">
+          <select id="regEvent" aria-label="Filter by event"><option value="all">All events</option>${ES.events.map(x => `<option value="${e(x.id)}" ${x.id === regEvent ? "selected" : ""}>${e(x.title)}</option>`).join("")}</select>
+          <input id="regQ" type="search" placeholder="Search name, email or ticket…" value="${e(regQuery)}">
+          <button class="btn btn-outline" id="csvBtn">Export CSV</button></div>
+        <div class="es-table-wrap"><table class="es-table"><thead><tr><th>Ticket</th><th>Attendee</th><th>Event</th><th>Status</th><th>Team</th><th>Paid</th><th>Check-in</th></tr></thead><tbody>
+        ${list.map(r => { const ev = ES.getEvent(r.eventId); return `<tr><td><code>${e(r.ticketId)}</code></td><td>${e(r.name)}<br><span class="es-muted">${e(r.email)}</span>${r.attendee ? `<br><span class="es-muted">${e(r.attendee.phone)} · ${e(r.attendee.roll)} · ${e(r.attendee.branch)}, ${e(r.attendee.year)}</span>` : ""}</td><td>${e(ev ? ev.title : r.eventId)}</td>
+          <td><span class="es-badge es-badge-${r.status === "registered" ? "open" : "almost"}">${r.status}</span></td><td>${r.team ? e(r.team.name) + `<br><span class="es-muted">${r.team.members.length + 1} members</span>` : "—"}</td><td>${r.paid ? "₹" + r.paid : "—"}</td>
+          <td>${r.status !== "registered" ? "—" : r.attended ? `<button class="btn btn-ghost btn-small" data-undo="${e(r.id)}">✓ In · Undo</button>` : `<button class="btn btn-outline btn-small" data-in="${e(r.ticketId)}">Check in</button>`}</td></tr>`; }).join("") || `<tr><td colspan="7">No registrations yet. Register for an event from a student account, then come back.</td></tr>`}
+        </tbody></table></div>`;
+    }
+
+    function checkinTab() {
+      const recent = ES.allRegs().filter(r => r.attended).sort((a, b) => (b.attendedAt || 0) - (a.attendedAt || 0)).slice(0, 8);
+      return `<div class="aside-card es-checkin"><h3>Check in an attendee</h3>
+        <p class="es-muted">Type the ticket code (e.g. <code>ES-AB12CD34</code>) or paste the text a QR scanner reads from the ticket.</p>
+        <form id="ciForm" class="es-ci-form"><input id="ciCode" placeholder="ES-XXXXXXXXX" autocomplete="off"><button class="btn btn-primary" type="submit">Check in</button></form>
+        <p id="ciMsg" class="es-ci-msg" role="status"></p></div>
+        <div class="aside-card" style="margin-top:16px;"><h3>Recent check-ins</h3>${recent.length ? `<ul class="es-notifs">${recent.map(r => `<li>${e(r.name)} — ${e((ES.getEvent(r.eventId) || {}).title || r.eventId)}<time>${new Date(r.attendedAt).toLocaleString()}</time></li>`).join("")}</ul>` : `<p class="es-muted">Nobody checked in yet.</p>`}</div>`;
+    }
+
+    function draw() {
+      if (!ES.admin.isAuthed()) return gate();
+      ES.refreshEvents();
+      const tabs = [["overview", "Overview"], ["events", "Events"], ["regs", "Registrations"], ["checkin", "Check-in"]];
+      root.innerHTML = `<div class="es-tabs" role="tablist">${tabs.map(t => `<button role="tab" class="${tab === t[0] ? "active" : ""}" data-tab="${t[0]}">${t[1]}</button>`).join("")}<span class="es-tabs-sp"></span><button class="btn btn-ghost btn-small" id="adminOut">Lock panel</button></div>
+        <div class="es-tab-body">${tab === "overview" ? overview() : tab === "events" ? eventsTab() : tab === "regs" ? regsTab() : checkinTab()}</div>`;
+      root.querySelectorAll("[data-tab]").forEach(b => b.addEventListener("click", () => { tab = b.dataset.tab; draw(); }));
+      document.getElementById("adminOut").addEventListener("click", () => { ES.admin.logout(); draw(); });
+      const q = (s) => root.querySelector(s);
+      if (tab === "events") {
+        q("#addEvent").addEventListener("click", () => eventForm(null));
+        q("#restore").addEventListener("click", () => ES.modal(`<button class="es-modal-x" data-close>✕</button><h3>Restore default events?</h3><p class="es-modal-sub">This removes events you added, undoes edits and brings back deleted ones. Registrations are kept.</p><div class="es-modal-actions"><button class="btn btn-ghost" data-close>Cancel</button><button class="btn btn-primary" id="yesRestore">Restore</button></div>`, (b) => b.querySelector("#yesRestore").addEventListener("click", () => { ES.admin.restoreDefaults(); ES.closeModal(); window.showToast("Defaults restored."); draw(); })));
+        root.querySelectorAll("[data-edit]").forEach(b => b.addEventListener("click", () => eventForm(ES.getEvent(b.dataset.edit))));
+        root.querySelectorAll("[data-del]").forEach(b => b.addEventListener("click", () => { const x = ES.getEvent(b.dataset.del);
+          ES.modal(`<button class="es-modal-x" data-close>✕</button><h3>Delete “${e(x.title)}”?</h3><p class="es-modal-sub">It will disappear from the site${ES.admin.isBuiltIn(x.id) ? " (you can bring it back with “Restore default events”)" : ""}.</p><div class="es-modal-actions"><button class="btn btn-ghost" data-close>Cancel</button><button class="btn btn-primary" id="yesDel">Delete</button></div>`,
+            (m) => m.querySelector("#yesDel").addEventListener("click", () => { ES.admin.deleteEvent(x.id); ES.closeModal(); window.showToast("Event deleted."); draw(); })); }));
+      }
+      if (tab === "regs") {
+        q("#regEvent").addEventListener("change", (ev) => { regEvent = ev.target.value; draw(); });
+        const rq = q("#regQ"); rq.addEventListener("input", () => { regQuery = rq.value; const pos = rq.selectionStart; draw(); const n = q("#regQ"); n.focus(); n.setSelectionRange(pos, pos); });
+        q("#csvBtn").addEventListener("click", () => { const l = filteredRegs(); if (!l.length) return window.showToast("No registrations to export.", "error"); ES.download("eventsphere-registrations.csv", ES.registrationsCsv(l), "text/csv"); });
+        root.querySelectorAll("[data-in]").forEach(b => b.addEventListener("click", () => { const r = ES.checkIn(b.dataset.in); window.showToast(r.message, r.ok ? "success" : "error"); draw(); }));
+        root.querySelectorAll("[data-undo]").forEach(b => b.addEventListener("click", () => { ES.admin.updateRecord(b.dataset.undo, { attended: false, attendedAt: null }); draw(); }));
+      }
+      if (tab === "checkin") {
+        q("#ciForm").addEventListener("submit", (ev) => { ev.preventDefault(); const r = ES.checkIn(q("#ciCode").value);
+          draw(); const m = document.getElementById("ciMsg"); m.textContent = r.message; m.className = "es-ci-msg " + (r.ok ? "ok" : "bad"); document.getElementById("ciCode").focus(); });
+      }
+    }
+    draw();
+
+  </script>
+</body>
+</html>

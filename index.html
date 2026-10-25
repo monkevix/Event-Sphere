@@ -56,6 +56,7 @@
         <ul class="nav-links">
           <li><a href="index.html" class="nav-link active">Home</a></li>
           <li><a href="events.html" class="nav-link">Events</a></li>
+          <li><a href="calendar.html" class="nav-link">Calendar</a></li>
           <li><a href="categories.html" class="nav-link">Categories</a></li>
           <li><a href="about.html" class="nav-link">About Us</a></li>
           <li><a href="contact.html" class="nav-link">Contact Us</a></li>
@@ -120,6 +121,17 @@
             <rect x="217" y="198" width="46" height="6" rx="3" fill="#f59e0b"/>
             <rect x="217" y="210" width="30" height="6" rx="3" fill="#a855f7"/>
           </svg>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ NEXT EVENT COUNTDOWN ============ -->
+    <section class="es-nextbanner" id="nextBanner" style="display:none;" aria-label="Next event countdown">
+      <div class="container">
+        <div class="es-nextbanner-inner">
+          <div><p class="es-muted">Next up on campus</p><h3 id="nextTitle"></h3><p class="es-muted" id="nextMeta"></p></div>
+          <div class="es-cd-big" id="nextCd"></div>
+          <a class="btn btn-primary" id="nextLink" href="events.html">View event</a>
         </div>
       </div>
     </section>
@@ -464,9 +476,10 @@
         <h3>Quick Links</h3>
         <ul>
           <li><a href="index.html">Home</a></li>
-          <li><a href="events.html">Events</a></li>
+          <li><a href="events.html">Events</a></li><li><a href="calendar.html">Calendar</a></li><li><a href="dashboard.html">My Dashboard</a></li>
           <li><a href="about.html">About Us</a></li>
           <li><a href="contact.html">Contact Us</a></li>
+          <li><a href="admin.html">Admin</a></li>
         </ul>
       </nav>
 
@@ -496,6 +509,20 @@
 
   <script src="js/icons.js"></script>
   <script src="js/auth.js"></script>
+  <script src="js/events.js"></script>
+  <script src="js/store.js"></script>
   <script src="js/main.js"></script>
+  <script>
+    (function () {
+      var ES = window.ES;
+      var next = ES.events.filter(function (e) { return ES.status(e) === "upcoming"; }).sort(function (a, b) { return ES.startAt(a) - ES.startAt(b); })[0];
+      if (!next) return;
+      document.getElementById("nextBanner").style.display = "block";
+      document.getElementById("nextTitle").textContent = next.title;
+      document.getElementById("nextMeta").textContent = next.displayDate + " · " + next.time + " · " + next.venue;
+      document.getElementById("nextCd").setAttribute("data-cd-big", next.id);
+      document.getElementById("nextLink").href = "event-details.html?id=" + encodeURIComponent(next.id);
+    })();
+  </script>
 </body>
 </html>

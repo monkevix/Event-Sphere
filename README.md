@@ -216,3 +216,19 @@ Source: `chitkara.edu.in/rti` + `chitkara.edu.in/admissions/admission-helpline` 
 ---
 
 *© 2026 EventSphere — built for academic purposes for FEE at Chitkara University, Punjab. Fonts via Google Fonts; palette/teal accents adapted for the dark theme.*
+
+
+---
+
+## 12. v2 additions (all HTML + CSS + vanilla JS + localStorage)
+
+| Feature | Where |
+|---|---|
+| Student dashboard (tickets, waitlist, past events, saved, badges, points, notifications, recommendations) | `dashboard.html` |
+| QR-code e-ticket (SVG QR, PNG download, print/PDF) | `ticket.html`, `js/qrcode.js` (MIT, Kazuhiko Arase) |
+| Certificate after check-in (print/PDF + PNG) | `certificate.html` |
+| Month + agenda calendar, category filter, "my events", Google Calendar link, `.ics` export | `calendar.html` |
+| Admin panel: analytics charts (pure SVG/CSS), add/edit/delete events, registrations table, CSV export, check-in by ticket code | `admin.html` (demo passcode `admin123`) |
+| Seat limits, "Almost full", waitlist with auto-promotion, countdown timers, clash detection, team registration, demo payment, bookmarks, reviews/ratings, in-page reminders | `js/store.js` (`window.ES`) |
+
+Notes: dates in `events.js` are shifted at load so there are always past + upcoming events (`RELATIVE_DATES` flag at top of `store.js`). All data lives in this browser's localStorage — it is a front-end prototype, not shared between devices.

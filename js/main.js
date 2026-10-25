@@ -69,7 +69,10 @@
       if (user) {
         document.body.classList.add("logged-in");
         if (navActions && !document.getElementById("navUserChip")) {
-          const chip = document.createElement("div");
+          const chip = document.createElement("a");
+          chip.href = "dashboard.html";
+          chip.title = "Open my dashboard";
+          chip.style.textDecoration = "none";
           chip.id = "navUserChip";
           chip.className = "auth-only";
           chip.style.display = "inline-flex";
@@ -149,8 +152,9 @@
     };
 
     // ----- Newsletter (index + any page) -----
+    const wait = window.wait || ((ms) => new Promise((resolve) => setTimeout(resolve, ms)));
     $$(".newsletter-form").forEach((form) => {
-      form.addEventListener("submit", (e) => {
+      form.addEventListener("submit", async (e) => {
         e.preventDefault();
         const input = form.querySelector('input[type="email"]');
         const val = (input?.value || "").trim();
@@ -161,44 +165,40 @@
           input?.setAttribute("aria-invalid", "true");
           return;
         }
+        if (!window.isEmailRegistered || !window.isEmailRegistered(val)) {
+          showToast("This email isn't registered. Use the email you signed up with, or create an account first.", "error");
+          input?.focus();
+          input?.setAttribute("aria-invalid", "true");
+          return;
+        }
+        const NL_KEY = "eventsphere_newsletter";
+        let subs = [];
+        try { subs = JSON.parse(localStorage.getItem(NL_KEY)) || []; } catch (err) { subs = []; }
+        if (subs.indexOf(val.toLowerCase()) >= 0) {
+          showToast("You're already subscribed with this email.");
+          return;
+        }
         input.removeAttribute("aria-invalid");
         const btn = form.querySelector('button[type="submit"]');
         const origText = btn ? btn.textContent : "";
         if (btn) {
-          btn.textContent = "Subscribed ✓";
+          btn.textContent = "Subscribing…";
           btn.disabled = true;
         }
+        await wait(700);
+        try { subs.push(val.toLowerCase()); localStorage.setItem(NL_KEY, JSON.stringify(subs)); } catch (err) {}
+        if (btn) btn.textContent = "Subscribed ✓";
         showToast("You're subscribed! Weekly digests coming soon.");
         form.reset();
-        setTimeout(() => {
-          if (btn) {
-            btn.textContent = origText || "Subscribe";
-            btn.disabled = false;
-          }
-        }, 2500);
+        await wait(2500);
+        if (btn) {
+          btn.textContent = origText || "Subscribe";
+          btn.disabled = false;
+        }
       });
     });
 
-    // ----- Registration helpers (for event pages) -----
-    window.getRegistrations = function () {
-      try {
-        return JSON.parse(localStorage.getItem("eventsphere_registrations") || "[]");
-      } catch {
-        return [];
-      }
-    };
-    window.isRegistered = function (eventId) {
-      return window.getRegistrations().includes(String(eventId));
-    };
-    window.toggleRegistration = function (eventId) {
-      const id = String(eventId);
-      let regs = window.getRegistrations();
-      const wasRegistered = regs.includes(id);
-      if (wasRegistered) regs = regs.filter((x) => x !== id);
-      else regs.push(id);
-      localStorage.setItem("eventsphere_registrations", JSON.stringify(regs));
-      return !wasRegistered; // new state
-    };
+    // Registration helpers now live in js/store.js (per-user, seats, waitlist).
 
     // ----- Theme toggle (light / dark) -----
     const THEME_KEY = "eventsphere_theme";

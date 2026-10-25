@@ -36,6 +36,7 @@
         <ul class="nav-links">
           <li><a href="index.html" class="nav-link">Home</a></li>
           <li><a href="events.html" class="nav-link active">Events</a></li>
+          <li><a href="calendar.html" class="nav-link">Calendar</a></li>
           <li><a href="categories.html" class="nav-link">Categories</a></li>
           <li><a href="about.html" class="nav-link">About Us</a></li>
           <li><a href="contact.html" class="nav-link">Contact Us</a></li>
@@ -93,7 +94,7 @@
         <p class="footer-tagline">The campus event management portal built for students, by students.</p>
         <div class="social-icons"><a href="#" aria-label="Instagram"><svg class="icon"><use href="#i-instagram"/></svg></a><a href="#" aria-label="LinkedIn"><svg class="icon"><use href="#i-linkedin"/></svg></a><a href="#" aria-label="Twitter"><svg class="icon"><use href="#i-twitter"/></svg></a><a href="#" aria-label="YouTube"><svg class="icon"><use href="#i-youtube"/></svg></a></div>
       </div>
-      <nav class="footer-col" aria-label="Quick links"><h3>Quick Links</h3><ul><li><a href="index.html">Home</a></li><li><a href="events.html">Events</a></li><li><a href="about.html">About Us</a></li><li><a href="contact.html">Contact Us</a></li></ul></nav>
+      <nav class="footer-col" aria-label="Quick links"><h3>Quick Links</h3><ul><li><a href="index.html">Home</a></li><li><a href="events.html">Events</a></li><li><a href="calendar.html">Calendar</a></li><li><a href="dashboard.html">My Dashboard</a></li><li><a href="about.html">About Us</a></li><li><a href="contact.html">Contact Us</a></li><li><a href="admin.html">Admin</a></li></ul></nav>
       <nav class="footer-col" aria-label="About"><h3>About</h3><ul><li><a href="about.html">Our Mission</a></li><li><a href="about.html#team">Our Team</a></li><li><a href="signup.html">Join EventSphere</a></li></ul></nav>
       <nav class="footer-col" aria-label="Legal"><h3>Legal</h3><ul><li><a href="#">Privacy Policy</a></li><li><a href="#">Terms & Conditions</a></li><li><a href="contact.html">Support</a></li></ul></nav>
     </div>
@@ -103,11 +104,13 @@
   <script src="js/icons.js"></script>
   <script src="js/auth.js"></script>
   <script src="js/events.js"></script>
+  <script src="js/store.js"></script>
   <script src="js/main.js"></script>
   <script>
+    const ES = window.ES;
     const params = new URLSearchParams(location.search);
     const id = params.get("id") || "codesphere-hackathon";
-    const ev = window.EVENTSPHERE_EVENTS.find(e => e.id === id);
+    const ev = ES.getEvent(id);
     const root = document.getElementById("detailsRoot");
     const notFound = document.getElementById("notFound");
     const breadcrumb = document.getElementById("breadcrumbTitle");
@@ -115,15 +118,26 @@
     const relatedGrid = document.getElementById("relatedGrid");
 
     function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
+    const stars = (n) => "★★★★★".slice(0, Math.round(n)) + "☆☆☆☆☆".slice(0, 5 - Math.round(n));
 
-    if (!ev) {
-      notFound.style.display = "block";
-      document.title = "EventSphere | Event Not Found";
-    } else {
-      document.title = `EventSphere | ${ev.title}`;
-      breadcrumb.textContent = ev.title;
-      const registered = window.isRegistered ? window.isRegistered(ev.id) : false;
-      const user = window.getCurrentUser ? window.getCurrentUser() : null;
+    function paint() {
+      const rec = ES.myRecord(ev.id);
+      const st = ES.status(ev);
+      const user = ES.user();
+      const seat = ES.seatState(ev);
+      const pct = Math.min(100, Math.round((ES.filled(ev) / ES.capacity(ev)) * 100));
+      const team = ES.teamInfo(ev);
+      const clash = !rec ? ES.findClash(ev) : null;
+      const rating = ES.ratingSummary(ev.id);
+      const canReview = user && ES.canReview(ev);
+      const myReview = user ? ES.reviewsFor(ev.id).find(r => r.userId === user.id) : null;
+
+      let btnText, btnCls, btnDisabled = false, hint;
+      if (rec && rec.status === "registered") { btnText = "Registered — tap to cancel"; btnCls = "btn-secondary"; hint = "You’re registered! Your QR ticket is ready below."; }
+      else if (rec) { btnText = "On waitlist — tap to leave"; btnCls = "btn-secondary"; hint = "You’ll get a seat automatically if someone cancels."; }
+      else if (st === "ended") { btnText = "Event ended"; btnCls = "btn-outline"; btnDisabled = true; hint = "Registration is closed for this event."; }
+      else if (seat.key === "full") { btnText = "Join waitlist"; btnCls = "btn-primary"; hint = "This event is full — join the waitlist."; }
+      else { btnText = ES.priceAmount(ev) ? "Register · " + ev.price : "Register for this event"; btnCls = "btn-primary"; hint = user ? (team ? "Team event — you’ll add your team on the next step." : "Takes one click.") : "Sign in required to register."; }
 
       const detailsPosterInner = ev.image
         ? `<img src="${encodeURI(ev.image)}" alt="${escapeHtml(ev.title)} poster" loading="lazy">`
@@ -137,14 +151,17 @@
             </div>
             <div class="details-meta-top">
               <span class="pill ${ev.pill}">${escapeHtml(ev.category)}</span>
-              <span style="font-size:0.875rem; color:var(--color-text-dim);">${ev.attendees}+ attending</span>
+              ${ES.seatBadge(ev)}
+              <span style="font-size:0.875rem; color:var(--color-text-dim);">${ES.filled(ev)}+ attending</span>
+              ${rating.count ? `<span class="es-rating-chip">★ ${rating.avg.toFixed(1)} · ${rating.count} review${rating.count>1?"s":""}</span>` : ""}
+              <span style="margin-left:auto;">${ES.heartBtn(ev)}</span>
             </div>
             <h1 class="details-title">${escapeHtml(ev.title)}</h1>
             <p class="details-organizer">by ${escapeHtml(ev.organizer)} · <span style="color:var(--color-success); font-weight:600;">${escapeHtml(ev.price)}</span></p>
-            <p class="details-desc">${escapeHtml(ev.longDescription)}</p>
+            <p class="details-desc">${escapeHtml(ev.longDescription || ev.description)}</p>
 
             <div class="details-tags">
-              ${ev.tags.map(t=>`<span class="detail-tag">${escapeHtml(t)}</span>`).join("")}
+              ${(ev.tags||[]).map(t=>`<span class="detail-tag">${escapeHtml(t)}</span>`).join("")}
             </div>
 
             <div class="details-sections">
@@ -160,8 +177,8 @@
                 <h3>What to bring</h3>
                 <ul class="details-list">
                   <li>College ID card (mandatory)</li>
+                  <li>Your QR ticket (from your dashboard)</li>
                   <li>For workshops: laptop + charger</li>
-                  <li>Good energy — we handle the rest</li>
                 </ul>
               </div>
               <div class="details-section">
@@ -178,29 +195,53 @@
               <span style="font-size:0.875rem; font-weight:600; color:var(--color-text-dim);">Share:</span>
               <button class="btn btn-ghost btn-small" id="shareBtn" type="button">Copy link</button>
               <button class="btn btn-ghost btn-small" id="shareNative" type="button" style="display:none;">Share</button>
+              <span style="font-size:0.875rem; font-weight:600; color:var(--color-text-dim); margin-left:10px;">Calendar:</span>
+              <a class="btn btn-ghost btn-small" href="${escapeHtml(ES.googleCalUrl(ev))}" target="_blank" rel="noopener">Google</a>
+              <button class="btn btn-ghost btn-small" id="icsBtn" type="button">.ics file</button>
+            </div>
+
+            <div class="es-reviews" id="reviews">
+              <h3>Reviews ${rating.count ? `<span class="es-rating-chip">★ ${rating.avg.toFixed(1)} · ${rating.count}</span>` : ""}</h3>
+              ${canReview ? `
+                <form id="reviewForm" class="es-review-form" novalidate>
+                  <div class="es-star-input" role="radiogroup" aria-label="Your rating">
+                    ${[5,4,3,2,1].map(n=>`<input type="radio" name="rating" id="st${n}" value="${n}" ${myReview && myReview.rating===n?"checked":""}><label for="st${n}" title="${n} star${n>1?"s":""}">★</label>`).join("")}
+                  </div>
+                  <textarea id="reviewText" rows="3" maxlength="500" placeholder="How was it? (optional)">${myReview ? escapeHtml(myReview.text) : ""}</textarea>
+                  <p class="es-form-error" id="reviewErr" role="alert"></p>
+                  <button class="btn btn-primary btn-small" type="submit">${myReview ? "Update review" : "Post review"}</button>
+                </form>` : `<p class="es-muted">${!user ? "Sign in to review events you attended." : st === "upcoming" ? "Reviews open once the event has started." : "Only registered attendees can review."}</p>`}
+              <div class="es-review-list">
+                ${ES.reviewsFor(ev.id).map(r=>`<div class="es-review"><div class="es-review-head"><strong>${escapeHtml(r.name)}</strong><span class="es-stars">${stars(r.rating)}</span><span class="es-muted">${new Date(r.ts).toLocaleDateString()}</span></div>${r.text?`<p>${escapeHtml(r.text)}</p>`:""}</div>`).join("") || `<p class="es-muted">No reviews yet.</p>`}
+              </div>
             </div>
           </div>
 
           <aside class="details-aside">
             <div class="aside-card">
               <h3 style="margin-bottom:14px;">Event snapshot</h3>
+              ${st !== "ended" ? `<div class="es-cd-big" data-cd-big="${escapeHtml(ev.id)}"></div>` : ""}
               <ul class="aside-list">
                 <li><span><svg class="icon"><use href="#i-calendar"/></svg>Date</span><strong>${escapeHtml(ev.displayDate)}</strong></li>
                 <li><span><svg class="icon"><use href="#i-clock"/></svg>Time</span><strong>${escapeHtml(ev.time)} – ${escapeHtml(ev.endTime)}</strong></li>
                 <li><span><svg class="icon"><use href="#i-pin"/></svg>Venue</span><strong>${escapeHtml(ev.venue)}</strong></li>
                 <li><span><svg class="icon"><use href="#i-tag"/></svg>Price</span><strong>${escapeHtml(ev.price)}</strong></li>
                 <li><span><svg class="icon"><use href="#i-medal"/></svg>Category</span><strong>${escapeHtml(ev.category)}</strong></li>
-                <li><span><svg class="icon"><use href="#i-users"/></svg>Attending</span><strong>${ev.attendees}+</strong></li>
+                ${team ? `<li><span><svg class="icon"><use href="#i-users"/></svg>Team size</span><strong>${team.min}–${team.max}</strong></li>` : ""}
               </ul>
-              <button id="registerBtn" type="button" class="btn ${registered ? "btn-secondary" : "btn-primary"} btn-block" style="margin-top:18px; padding:14px;">
-                ${registered ? "Registered — tap to cancel" : "Register for this event"}
-              </button>
-              <p id="registerHint" style="font-size:0.82rem; color:var(--color-text-dim); text-align:center; margin-top:10px;">
-                ${registered ? "You’re registered! Details will be emailed to your college ID." : user ? "One click — saved in this browser (demo)." : "Sign in required to register."}
-              </p>
-              <div id="attendeeNote" style="margin-top:14px; padding:12px; background:var(--color-success-bg); border:1px solid rgba(52,211,153,0.2); border-radius:10px; font-size:0.875rem; color:var(--color-success); display:${registered ? "block" : "none"};">
-                You're on the list. Show your college ID at the venue.
+              <div class="es-seatmeter" title="${ES.filled(ev)} of ${ES.capacity(ev)} seats taken">
+                <div class="es-seatmeter-bar"><span class="es-fill-${seat.key}" style="width:${pct}%"></span></div>
+                <div class="es-seatmeter-label"><span>${ES.filled(ev)} / ${ES.capacity(ev)} seats taken</span><strong>${st === "ended" ? "Closed" : seat.key === "full" ? "Full" : seat.left + " left"}</strong></div>
               </div>
+              ${clash ? `<div class="es-note es-note-warn" style="margin-top:14px;">⚠ Clashes with <strong>${escapeHtml(clash.title)}</strong> (${escapeHtml(clash.time)}–${escapeHtml(clash.endTime)}).</div>` : ""}
+              <button id="registerBtn" type="button" ${btnDisabled ? "disabled" : ""} class="btn ${btnCls} btn-block" style="margin-top:18px; padding:14px;">${btnText}</button>
+              <p id="registerHint" style="font-size:0.82rem; color:var(--color-text-dim); text-align:center; margin-top:10px;">${hint}</p>
+              ${rec && rec.status === "registered" ? `
+                <div class="es-ticket-cta">
+                  <div class="es-ticket-code">${escapeHtml(rec.ticketId)}</div>
+                  <a class="btn btn-primary btn-block" href="ticket.html?id=${encodeURIComponent(rec.ticketId)}">View QR ticket</a>
+                  ${rec.attended ? `<a class="btn btn-outline btn-block" style="margin-top:8px;" href="certificate.html?id=${encodeURIComponent(rec.ticketId)}">Get certificate</a>` : ""}
+                </div>` : ""}
             </div>
 
             <div class="aside-card" style="margin-top:16px;">
@@ -218,13 +259,55 @@
           </aside>
         </div>
       `;
+      bind();
+      ES.tick();
+    }
 
-      const sameCategory = window.EVENTSPHERE_EVENTS.filter(e => e.category === ev.category && e.id !== ev.id);
+    function bind() {
+      document.getElementById("registerBtn").addEventListener("click", () => {
+        if (!ES.user()) return ES.needLogin();
+        if (ES.myRecord(ev.id)) ES.cancelWithConfirm(ev, paint);
+        else ES.startRegistration(ev, paint);
+      });
+      document.getElementById("shareBtn").addEventListener("click", async () => {
+        const url = location.href;
+        try { await navigator.clipboard.writeText(url); window.showToast && window.showToast("Link copied to clipboard!"); }
+        catch { window.showToast && window.showToast(url, "success"); }
+      });
+      document.getElementById("icsBtn").addEventListener("click", () => ES.downloadIcs([ev], ev.id + ".ics"));
+      if (navigator.share) {
+        const native = document.getElementById("shareNative");
+        native.style.display = "inline-flex";
+        native.addEventListener("click", () => navigator.share({ title: ev.title, text: ev.description, url: location.href }).catch(() => {}));
+      }
+      const form = document.getElementById("reviewForm");
+      if (form) form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const r = form.querySelector('input[name="rating"]:checked');
+        if (!r) { document.getElementById("reviewErr").textContent = "Please pick a star rating."; return; }
+        ES.saveReview(ev.id, r.value, document.getElementById("reviewText").value);
+        window.showToast && window.showToast("Thanks for your review!");
+        paint();
+        document.getElementById("reviews").scrollIntoView({ behavior: "smooth", block: "start" });
+      });
+    }
+
+    if (!ev) {
+      notFound.style.display = "block";
+      document.title = "EventSphere | Event Not Found";
+    } else {
+      document.title = `EventSphere | ${ev.title}`;
+      breadcrumb.textContent = ev.title;
+      paint();
+      ES.startCountdowns();
+      document.addEventListener("es:data-changed", paint);
+
+      const sameCategory = ES.events.filter(e => e.category === ev.category && e.id !== ev.id);
       let related = [...sameCategory];
       if (related.length < 3) {
-        const filler = window.EVENTSPHERE_EVENTS
+        const filler = ES.events
           .filter(e => e.id !== ev.id && !related.some(r => r.id === e.id))
-          .sort((a, b) => new Date(a.date) - new Date(b.date));
+          .sort((a, b) => ES.startAt(a) - ES.startAt(b));
         while (related.length < 3 && filler.length) related.push(filler.shift());
       }
       related = related.slice(0, 3);
@@ -242,40 +325,12 @@
               <span class="pill ${r.pill}">${escapeHtml(r.category)}</span>
               <h3 class="event-title" style="margin-top:10px;">${escapeHtml(r.title)}</h3>
               <ul class="event-meta"><li>${ESIcon("calendar")} ${escapeHtml(r.displayDate)} · ${ESIcon("clock")} ${escapeHtml(r.time)}</li><li>${ESIcon("pin")} ${escapeHtml(r.venue)}</li></ul>
+              <div class="es-card-status">${ES.seatBadge(r)}</div>
               <a href="event-details.html?id=${encodeURIComponent(r.id)}" class="btn btn-primary btn-small btn-block" style="font-size:0.82rem; padding:9px 14px;">Details</a>
             </div>
           `;
           relatedGrid.appendChild(a);
         });
-      }
-
-      const btn = document.getElementById("registerBtn");
-      const hint = document.getElementById("registerHint");
-      const note = document.getElementById("attendeeNote");
-      btn.addEventListener("click", ()=>{
-        if (!window.isLoggedIn || !window.isLoggedIn()) {
-          window.showToast && window.showToast("Please sign in to register.", "error");
-          setTimeout(()=> location.href="signin.html", 700);
-          return;
-        }
-        const now = window.toggleRegistration(ev.id);
-        btn.textContent = now ? "Registered — tap to cancel" : "Register for this event";
-        btn.className = `btn ${now ? "btn-secondary" : "btn-primary"} btn-block`;
-        hint.textContent = now ? "You’re registered! Details will be emailed to your college ID." : "One click — saved in this browser (demo).";
-        note.style.display = now ? "block" : "none";
-        window.showToast && window.showToast(now ? `Registered for ${escapeHtml(ev.title)}!` : "Registration cancelled.");
-      });
-
-      const shareBtn = document.getElementById("shareBtn");
-      shareBtn.addEventListener("click", async ()=>{
-        const url = location.href;
-        try { await navigator.clipboard.writeText(url); window.showToast && window.showToast("Link copied to clipboard!"); }
-        catch { window.showToast && window.showToast(url, "success"); }
-      });
-      if (navigator.share) {
-        const native = document.getElementById("shareNative");
-        native.style.display = "inline-flex";
-        native.addEventListener("click", ()=> navigator.share({ title: ev.title, text: ev.description, url: location.href }).catch(()=>{}));
       }
     }
   </script>

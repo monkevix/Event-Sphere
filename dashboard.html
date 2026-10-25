@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EventSphere | My Dashboard</title>
+  <meta name="description" content="Your tickets, saved events, certificates, badges and reminders." />
+  <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Karla:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Unbounded:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <script>
+  (function () {
+    try {
+      var t = null;
+      try { t = localStorage.getItem("eventsphere_theme"); } catch (e) {}
+      if (!t) { try { var m = window.name.match(/(?:^|;)eventsphere_theme=([^;]+)/); if (m) t = m[1]; } catch (e2) {} }
+      if (t === "light") document.documentElement.classList.add("light-mode");
+    } catch (e) {}
+  })();
+</script>
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <header class="site-header" id="site-header">
+    <nav class="navbar" aria-label="Primary navigation">
+      <a href="index.html" class="logo">
+        <span class="logo-mark" aria-hidden="true">
+          <svg viewBox="0 0 40 40" width="32" height="32">
+            <circle cx="20" cy="20" r="7" fill="url(#logoGradient)"/>
+            <ellipse cx="20" cy="20" rx="18" ry="7" fill="none" stroke="url(#logoGradient)" stroke-width="2"/>
+            <defs><linearGradient id="logoGradient" x1="0" y1="0" x2="40" y2="40"><stop offset="0%" stop-color="#f59e0b"/><stop offset="100%" stop-color="#ec4899"/></linearGradient></defs>
+          </svg>
+        </span>
+        <span class="logo-text">Event<span>Sphere</span></span>
+      </a>
+      <button class="nav-toggle" id="navToggle" aria-label="Open navigation menu" aria-expanded="false" aria-controls="primaryMenu">
+        <span class="nav-toggle-bar"></span><span class="nav-toggle-bar"></span><span class="nav-toggle-bar"></span>
+      </button>
+      <div class="nav-menu" id="primaryMenu">
+        <ul class="nav-links">
+          <li><a href="index.html" class="nav-link">Home</a></li>
+          <li><a href="events.html" class="nav-link active">Events</a></li>
+          <li><a href="calendar.html" class="nav-link">Calendar</a></li>
+          <li><a href="categories.html" class="nav-link">Categories</a></li>
+          <li><a href="about.html" class="nav-link">About Us</a></li>
+          <li><a href="contact.html" class="nav-link">Contact Us</a></li>
+        </ul>
+        <div class="nav-actions">
+          <a href="signin.html" class="btn btn-ghost guest-only">Sign In</a>
+          <a href="signup.html" class="btn btn-primary btn-small guest-only">Sign Up</a>
+          <button class="btn btn-ghost auth-only" id="logoutBtn" type="button">Logout</button>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main id="main-content">
+
+    <section class="page-hero">
+      <div class="container">
+        <p class="eyebrow">Your Space</p>
+        <h1>My Dashboard</h1>
+        <p class="page-hero-sub">Tickets, saved events, certificates, badges and reminders — all in one place.</p>
+      </div>
+    </section>
+    <section class="section" style="padding-top:12px;">
+      <div class="container" id="dash"></div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="logo">
+          <span class="logo-mark" aria-hidden="true">
+            <svg viewBox="0 0 40 40" width="28" height="28">
+              <circle cx="20" cy="20" r="7" fill="url(#footerLogoGradient)"/><ellipse cx="20" cy="20" rx="18" ry="7" fill="none" stroke="url(#footerLogoGradient)" stroke-width="2"/>
+              <defs><linearGradient id="footerLogoGradient" x1="0" y1="0" x2="40" y2="40"><stop offset="0%" stop-color="#f59e0b"/><stop offset="100%" stop-color="#ec4899"/></linearGradient></defs>
+            </svg>
+          </span>
+          <span class="logo-text">Event<span>Sphere</span></span>
+        </a>
+        <p class="footer-tagline">The campus event management portal built for students, by students.</p>
+        <div class="social-icons"><a href="#" aria-label="Instagram"><svg class="icon"><use href="#i-instagram"/></svg></a><a href="#" aria-label="LinkedIn"><svg class="icon"><use href="#i-linkedin"/></svg></a><a href="#" aria-label="Twitter"><svg class="icon"><use href="#i-twitter"/></svg></a><a href="#" aria-label="YouTube"><svg class="icon"><use href="#i-youtube"/></svg></a></div>
+      </div>
+      <nav class="footer-col" aria-label="Quick links"><h3>Quick Links</h3><ul><li><a href="index.html">Home</a></li><li><a href="events.html">Events</a></li><li><a href="calendar.html">Calendar</a></li><li><a href="dashboard.html">My Dashboard</a></li><li><a href="about.html">About Us</a></li><li><a href="contact.html">Contact Us</a></li><li><a href="admin.html">Admin</a></li></ul></nav>
+      <nav class="footer-col" aria-label="About"><h3>About</h3><ul><li><a href="about.html">Our Mission</a></li><li><a href="about.html#team">Our Team</a></li><li><a href="signup.html">Join EventSphere</a></li></ul></nav>
+      <nav class="footer-col" aria-label="Legal"><h3>Legal</h3><ul><li><a href="#">Privacy Policy</a></li><li><a href="#">Terms & Conditions</a></li><li><a href="contact.html">Support</a></li></ul></nav>
+    </div>
+    <div class="footer-bottom"><p>&copy; 2026 EventSphere. All rights reserved. Built for academic project purposes.</p></div>
+  </footer>
+
+  <script src="js/icons.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/events.js"></script>
+  <script src="js/store.js"></script>
+  <script src="js/main.js"></script>
+  <script>
+
+    const ES = window.ES;
+    const dash = document.getElementById("dash");
+    const e = ES.esc;
+
+    function row(ev, rec, actions, extra) {
+      const img = ev.image ? `<img src="${encodeURI(ev.image)}" alt="" loading="lazy">` : ESIcon(ev.icon, "1.6rem");
+      return `<article class="es-row">
+        <a class="es-row-img ${ev.poster}" href="event-details.html?id=${encodeURIComponent(ev.id)}">${img}</a>
+        <div class="es-row-body">
+          <div class="es-row-top"><span class="pill ${ev.pill}">${e(ev.category)}</span>${extra || ""}</div>
+          <h3><a href="event-details.html?id=${encodeURIComponent(ev.id)}">${e(ev.title)}</a></h3>
+          <p class="es-muted">${ESIcon("calendar")} ${e(ev.displayDate)} · ${e(ev.time)} &nbsp; ${ESIcon("pin")} ${e(ev.venue)}</p>
+          ${rec ? `<p class="es-muted">Ticket <code>${e(rec.ticketId)}</code>${rec.team ? ` · Team <strong>${e(rec.team.name)}</strong>` : ""}${rec.paid ? ` · Paid ₹${rec.paid} (demo)` : ""}</p>` : ""}
+        </div>
+        <div class="es-row-actions">${actions}</div>
+      </article>`;
+    }
+
+    function render() {
+      const u = ES.user();
+      if (!u) {
+        dash.innerHTML = `<div class="es-empty"><h2>Sign in to see your dashboard</h2><p>Your registrations, QR tickets, saved events and certificates are tied to your account.</p><a class="btn btn-primary" href="signin.html?next=dashboard.html">Sign in</a> <a class="btn btn-outline" href="signup.html">Create account</a></div>`;
+        return;
+      }
+      ES.refreshEvents();
+      const st = ES.stats();
+      const recs = ES.myRecords().map(r => ({ r, ev: ES.getEvent(r.eventId) })).filter(x => x.ev);
+      const upcoming = recs.filter(x => x.r.status === "registered" && ES.status(x.ev) !== "ended").sort((a, b) => ES.startAt(a.ev) - ES.startAt(b.ev));
+      const wait = recs.filter(x => x.r.status === "waitlist" && ES.status(x.ev) !== "ended");
+      const past = recs.filter(x => x.r.status === "registered" && ES.status(x.ev) === "ended").sort((a, b) => ES.startAt(b.ev) - ES.startAt(a.ev));
+      const saved = ES.savedIds().map(id => ES.getEvent(id)).filter(Boolean);
+      const recommended = ES.recommend(3);
+      const notifs = ES.myNotifs();
+      const initials = u.name.split(" ").map(w => w[0]).join("").slice(0, 2).toUpperCase();
+      const next = upcoming[0];
+      const nextLvl = st.points >= 150 ? null : st.points >= 80 ? 150 : st.points >= 30 ? 80 : 30;
+
+      dash.innerHTML = `
+        <div class="es-profile">
+          <span class="avatar es-avatar-lg">${e(initials)}</span>
+          <div class="es-profile-text"><h2>${e(u.name)}</h2><p class="es-muted">${e(u.email)}</p></div>
+          <div class="es-level"><span class="es-level-name">${e(st.level)}</span><span class="es-muted">${st.points} pts${nextLvl ? ` · ${nextLvl - st.points} to next level` : " · top level!"}</span></div>
+        </div>
+
+        <div class="es-stat-grid">
+          <div class="es-stat"><strong>${st.registered}</strong><span>Registered</span></div>
+          <div class="es-stat"><strong>${st.attended}</strong><span>Attended</span></div>
+          <div class="es-stat"><strong>${st.saved}</strong><span>Saved</span></div>
+          <div class="es-stat"><strong>${st.points}</strong><span>Points</span></div>
+        </div>
+
+        ${next ? `<div class="es-next"><div><p class="es-muted">Next up</p><h3>${e(next.ev.title)}</h3><p class="es-muted">${e(next.ev.displayDate)} · ${e(next.ev.time)} · ${e(next.ev.venue)}</p></div><div class="es-cd-big" data-cd-big="${e(next.ev.id)}"></div><a class="btn btn-primary" href="ticket.html?id=${encodeURIComponent(next.r.ticketId)}">Open ticket</a></div>` : ""}
+
+        <div class="es-dash-grid">
+          <div class="es-dash-main">
+            <h2 class="es-h">Upcoming tickets <span class="es-count">${upcoming.length}</span></h2>
+            ${upcoming.length ? upcoming.map(x => row(x.ev, x.r,
+              `<a class="btn btn-primary btn-small" href="ticket.html?id=${encodeURIComponent(x.r.ticketId)}">QR ticket</a>
+               <a class="btn btn-outline btn-small" target="_blank" rel="noopener" href="${e(ES.googleCalUrl(x.ev))}" title="Opens Google Calendar with this event filled in. No file needed.">Add to Google Calendar</a>
+               <button class="btn btn-ghost btn-small" data-ics="${e(x.ev.id)}" title="Downloads a calendar file you can open in Apple/Outlook calendar">.ics file</button>
+               <button class="btn btn-ghost btn-small" data-cancel="${e(x.ev.id)}">Cancel</button>`,
+              `<span class="es-countdown" data-cd="${e(x.ev.id)}"></span>`)).join("") : `<div class="es-empty-sm">No upcoming tickets yet. <a href="events.html">Browse events →</a></div>`}
+
+            ${wait.length ? `<h2 class="es-h">Waitlist <span class="es-count">${wait.length}</span></h2>` + wait.map(x => row(x.ev, null,
+              `<button class="btn btn-ghost btn-small" data-cancel="${e(x.ev.id)}">Leave waitlist</button>`, `<span class="es-badge es-badge-almost">Waitlisted</span>`)).join("") : ""}
+
+            <h2 class="es-h">Past events <span class="es-count">${past.length}</span></h2>
+            ${past.length ? past.map(x => row(x.ev, x.r,
+              (x.r.attended ? `<a class="btn btn-primary btn-small" href="certificate.html?id=${encodeURIComponent(x.r.ticketId)}">Certificate</a>` : `<span class="es-muted" style="font-size:.8rem;">Certificate unlocks after check-in</span>`) +
+              `<a class="btn btn-outline btn-small" href="event-details.html?id=${encodeURIComponent(x.ev.id)}#reviews">${ES.reviewsFor(x.ev.id).some(r => r.userId === u.id) ? "Edit review" : "Review"}</a>`,
+              x.r.attended ? `<span class="es-badge es-badge-open">✓ Attended</span>` : `<span class="es-badge es-badge-ended">Not checked in</span>`)).join("") : `<div class="es-empty-sm">Events you attend will show up here.</div>`}
+
+            <h2 class="es-h">Saved events <span class="es-count">${saved.length}</span></h2>
+            ${saved.length ? saved.map(ev => row(ev, null,
+              `<a class="btn btn-primary btn-small" href="event-details.html?id=${encodeURIComponent(ev.id)}">Details</a><button class="btn btn-ghost btn-small" data-unsave="${e(ev.id)}">Remove</button>`,
+              ES.seatBadge(ev))).join("") : `<div class="es-empty-sm">Tap the heart on any event to save it.</div>`}
+          </div>
+
+          <aside class="es-dash-side">
+            <div class="aside-card">
+              <div class="es-side-head"><h3>Notifications</h3>${notifs.length ? `<button class="btn btn-ghost btn-small" id="clearNotifs">Clear</button>` : ""}</div>
+              ${notifs.length ? `<ul class="es-notifs">${notifs.slice(0, 8).map(n => `<li class="${n.seen ? "" : "unseen"}">${n.href ? `<a href="${e(n.href)}">${e(n.text)}</a>` : e(n.text)}<time>${new Date(n.ts).toLocaleString()}</time></li>`).join("")}</ul>` : `<p class="es-muted">You're all caught up. Reminders appear here 24 hours and 1 hour before your events.</p>`}
+            </div>
+
+            <div class="aside-card" style="margin-top:16px;">
+              <h3 style="margin-bottom:12px;">Badges</h3>
+              <div class="es-badges">${st.badges.map(b => `<div class="es-bdg ${b.earned ? "earned" : ""}" title="${e(b.desc)}">${ESIcon(b.icon, "1.3rem")}<span>${e(b.name)}</span></div>`).join("")}</div>
+              <p class="es-muted" style="margin-top:10px;font-size:.8rem;">${st.badges.filter(b => b.earned).length} of ${st.badges.length} earned. Hover a badge to see how to unlock it.</p>
+            </div>
+
+            <div class="aside-card" style="margin-top:16px;">
+              <h3 style="margin-bottom:6px;">Suggested for you</h3>
+              <p class="es-muted" style="margin-bottom:10px;font-size:.82rem;">Based on events you joined and saved.</p>
+              ${recommended.map(ev => `<a class="es-mini" href="event-details.html?id=${encodeURIComponent(ev.id)}"><strong>${e(ev.title)}</strong><span class="es-muted">${e(ev.displayDate)} · ${e(ev.category)}</span></a>`).join("") || `<p class="es-muted">Nothing new right now.</p>`}
+            </div>
+
+            <div class="aside-card" style="margin-top:16px;">
+              <h3 style="margin-bottom:10px;">Quick actions</h3>
+              <button class="btn btn-outline btn-block" id="icsAll" ${upcoming.length ? "" : "disabled"}>Download my events (.ics)</button>
+              <a class="btn btn-ghost btn-block" style="margin-top:8px;" href="calendar.html">Open calendar</a>
+            </div>
+          </aside>
+        </div>`;
+      ES.tick();
+      ES.markNotifsSeen();
+
+      dash.querySelectorAll("[data-cancel]").forEach(b => b.addEventListener("click", () => ES.cancelWithConfirm(ES.getEvent(b.dataset.cancel), render)));
+      dash.querySelectorAll("[data-unsave]").forEach(b => b.addEventListener("click", () => { ES.toggleSaved(b.dataset.unsave); render(); }));
+      dash.querySelectorAll("[data-ics]").forEach(b => b.addEventListener("click", () => ES.downloadIcs([ES.getEvent(b.dataset.ics)], b.dataset.ics + ".ics")));
+      const all = document.getElementById("icsAll");
+      if (all) all.addEventListener("click", () => ES.downloadIcs(upcoming.map(x => x.ev), "my-eventsphere-events.ics"));
+      const cn = document.getElementById("clearNotifs");
+      if (cn) cn.addEventListener("click", () => { ES.clearNotifs(); render(); });
+    }
+    render();
+    ES.startCountdowns();
+    document.addEventListener("es:data-changed", render);
+
+  </script>
+</body>
+</html>

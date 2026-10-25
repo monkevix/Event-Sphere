@@ -42,6 +42,7 @@
         <ul class="nav-links">
           <li><a href="index.html" class="nav-link">Home</a></li>
           <li><a href="events.html" class="nav-link">Events</a></li>
+          <li><a href="calendar.html" class="nav-link">Calendar</a></li>
           <li><a href="categories.html" class="nav-link">Categories</a></li>
           <li><a href="about.html" class="nav-link">About Us</a></li>
           <li><a href="contact.html" class="nav-link">Contact Us</a></li>
@@ -123,7 +124,7 @@
           <a href="#" aria-label="Instagram"><svg class="icon"><use href="#i-instagram"/></svg></a><a href="#" aria-label="LinkedIn"><svg class="icon"><use href="#i-linkedin"/></svg></a><a href="#" aria-label="Twitter"><svg class="icon"><use href="#i-twitter"/></svg></a><a href="#" aria-label="YouTube"><svg class="icon"><use href="#i-youtube"/></svg></a>
         </div>
       </div>
-      <nav class="footer-col" aria-label="Quick links"><h3>Quick Links</h3><ul><li><a href="index.html">Home</a></li><li><a href="events.html">Events</a></li><li><a href="about.html">About Us</a></li><li><a href="contact.html">Contact Us</a></li></ul></nav>
+      <nav class="footer-col" aria-label="Quick links"><h3>Quick Links</h3><ul><li><a href="index.html">Home</a></li><li><a href="events.html">Events</a></li><li><a href="calendar.html">Calendar</a></li><li><a href="dashboard.html">My Dashboard</a></li><li><a href="about.html">About Us</a></li><li><a href="contact.html">Contact Us</a></li><li><a href="admin.html">Admin</a></li></ul></nav>
       <nav class="footer-col" aria-label="About"><h3>About</h3><ul><li><a href="about.html">Our Mission</a></li><li><a href="about.html#team">Our Team</a></li><li><a href="signup.html">Join EventSphere</a></li></ul></nav>
       <nav class="footer-col" aria-label="Legal"><h3>Legal</h3><ul><li><a href="#">Privacy Policy</a></li><li><a href="#">Terms & Conditions</a></li><li><a href="contact.html">Support</a></li></ul></nav>
     </div>
@@ -132,7 +133,9 @@
 
   <script src="js/icons.js"></script>
   <script src="js/auth.js"></script>
+  <script src="js/events.js"></script>
   <script src="js/captcha.js"></script>
+  <script src="js/store.js"></script>
   <script src="js/main.js"></script>
   <script>
     const form = document.getElementById("signup-form");
@@ -157,7 +160,7 @@
       errorBox.style.display = "none";
     }
 
-    form.addEventListener("submit", (e) => {
+    form.addEventListener("submit", async (e) => {
       e.preventDefault();
       clearError();
       captcha.clearError();
@@ -183,11 +186,18 @@
         return;
       }
 
-      const result = registerUser({ name, email, password });
-      if (!result.ok) { showError(result.message); return; }
-
-      showToast("Account created! Redirecting...");
-      setTimeout(() => window.location.href = "index.html", 700);
+      const submitBtn = form.querySelector('button[type="submit"]');
+      const origLabel = submitBtn ? submitBtn.textContent : "";
+      if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = "Creating account…"; }
+      try {
+        const result = await registerUser({ name, email, password });
+        showToast("Account created! Redirecting...");
+        await wait(700);
+        window.location.href = (function(){var n=new URLSearchParams(location.search).get("next");return n&&/^[\w-]+\.html(\?[\w=&%.-]*)?$/.test(n)?n:"index.html";})();
+      } catch (err) {
+        showError(err.message);
+        if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = origLabel; }
+      }
     });
   </script>
 </body>

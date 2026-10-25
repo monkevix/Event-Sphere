@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EventSphere | Events Calendar</title>
+  <meta name="description" content="Month and agenda calendar of all campus events with calendar export." />
+  <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Karla:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Unbounded:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <script>
+  (function () {
+    try {
+      var t = null;
+      try { t = localStorage.getItem("eventsphere_theme"); } catch (e) {}
+      if (!t) { try { var m = window.name.match(/(?:^|;)eventsphere_theme=([^;]+)/); if (m) t = m[1]; } catch (e2) {} }
+      if (t === "light") document.documentElement.classList.add("light-mode");
+    } catch (e) {}
+  })();
+</script>
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <header class="site-header" id="site-header">
+    <nav class="navbar" aria-label="Primary navigation">
+      <a href="index.html" class="logo">
+        <span class="logo-mark" aria-hidden="true">
+          <svg viewBox="0 0 40 40" width="32" height="32">
+            <circle cx="20" cy="20" r="7" fill="url(#logoGradient)"/>
+            <ellipse cx="20" cy="20" rx="18" ry="7" fill="none" stroke="url(#logoGradient)" stroke-width="2"/>
+            <defs><linearGradient id="logoGradient" x1="0" y1="0" x2="40" y2="40"><stop offset="0%" stop-color="#f59e0b"/><stop offset="100%" stop-color="#ec4899"/></linearGradient></defs>
+          </svg>
+        </span>
+        <span class="logo-text">Event<span>Sphere</span></span>
+      </a>
+      <button class="nav-toggle" id="navToggle" aria-label="Open navigation menu" aria-expanded="false" aria-controls="primaryMenu">
+        <span class="nav-toggle-bar"></span><span class="nav-toggle-bar"></span><span class="nav-toggle-bar"></span>
+      </button>
+      <div class="nav-menu" id="primaryMenu">
+        <ul class="nav-links">
+          <li><a href="index.html" class="nav-link">Home</a></li>
+          <li><a href="events.html" class="nav-link active">Events</a></li>
+          <li><a href="calendar.html" class="nav-link">Calendar</a></li>
+          <li><a href="categories.html" class="nav-link">Categories</a></li>
+          <li><a href="about.html" class="nav-link">About Us</a></li>
+          <li><a href="contact.html" class="nav-link">Contact Us</a></li>
+        </ul>
+        <div class="nav-actions">
+          <a href="signin.html" class="btn btn-ghost guest-only">Sign In</a>
+          <a href="signup.html" class="btn btn-primary btn-small guest-only">Sign Up</a>
+          <button class="btn btn-ghost auth-only" id="logoutBtn" type="button">Logout</button>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main id="main-content">
+
+    <section class="page-hero">
+      <div class="container">
+        <p class="eyebrow">Plan Your Month</p>
+        <h1>Events Calendar</h1>
+        <p class="page-hero-sub">See everything happening on campus at a glance, switch to an agenda list, and add events to your own calendar.</p>
+      </div>
+    </section>
+    <section class="section" style="padding-top:12px;">
+      <div class="container">
+        <div class="es-cal-bar">
+          <div class="es-cal-nav">
+            <button class="btn btn-outline btn-small" id="calPrev" aria-label="Previous month">‹</button>
+            <h2 id="calTitle" aria-live="polite"></h2>
+            <button class="btn btn-outline btn-small" id="calNext" aria-label="Next month">›</button>
+            <button class="btn btn-ghost btn-small" id="calToday">Today</button>
+          </div>
+          <div class="es-cal-tools">
+            <div class="es-seg" role="group" aria-label="View">
+              <button type="button" class="active" data-view="month">Month</button>
+              <button type="button" data-view="agenda">Agenda</button>
+            </div>
+            <label class="es-check"><input type="checkbox" id="mineOnly"> My events only</label>
+            <button class="btn btn-outline btn-small" id="calIcs">Export .ics</button>
+          </div>
+        </div>
+        <div class="es-legend" id="calLegend"></div>
+        <div class="es-cal-layout">
+          <div id="calMain"></div>
+          <aside class="aside-card es-cal-side" id="calSide"></aside>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="logo">
+          <span class="logo-mark" aria-hidden="true">
+            <svg viewBox="0 0 40 40" width="28" height="28">
+              <circle cx="20" cy="20" r="7" fill="url(#footerLogoGradient)"/><ellipse cx="20" cy="20" rx="18" ry="7" fill="none" stroke="url(#footerLogoGradient)" stroke-width="2"/>
+              <defs><linearGradient id="footerLogoGradient" x1="0" y1="0" x2="40" y2="40"><stop offset="0%" stop-color="#f59e0b"/><stop offset="100%" stop-color="#ec4899"/></linearGradient></defs>
+            </svg>
+          </span>
+          <span class="logo-text">Event<span>Sphere</span></span>
+        </a>
+        <p class="footer-tagline">The campus event management portal built for students, by students.</p>
+        <div class="social-icons"><a href="#" aria-label="Instagram"><svg class="icon"><use href="#i-instagram"/></svg></a><a href="#" aria-label="LinkedIn"><svg class="icon"><use href="#i-linkedin"/></svg></a><a href="#" aria-label="Twitter"><svg class="icon"><use href="#i-twitter"/></svg></a><a href="#" aria-label="YouTube"><svg class="icon"><use href="#i-youtube"/></svg></a></div>
+      </div>
+      <nav class="footer-col" aria-label="Quick links"><h3>Quick Links</h3><ul><li><a href="index.html">Home</a></li><li><a href="events.html">Events</a></li><li><a href="calendar.html">Calendar</a></li><li><a href="dashboard.html">My Dashboard</a></li><li><a href="about.html">About Us</a></li><li><a href="contact.html">Contact Us</a></li><li><a href="admin.html">Admin</a></li></ul></nav>
+      <nav class="footer-col" aria-label="About"><h3>About</h3><ul><li><a href="about.html">Our Mission</a></li><li><a href="about.html#team">Our Team</a></li><li><a href="signup.html">Join EventSphere</a></li></ul></nav>
+      <nav class="footer-col" aria-label="Legal"><h3>Legal</h3><ul><li><a href="#">Privacy Policy</a></li><li><a href="#">Terms & Conditions</a></li><li><a href="contact.html">Support</a></li></ul></nav>
+    </div>
+    <div class="footer-bottom"><p>&copy; 2026 EventSphere. All rights reserved. Built for academic project purposes.</p></div>
+  </footer>
+
+  <script src="js/icons.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/events.js"></script>
+  <script src="js/store.js"></script>
+  <script src="js/main.js"></script>
+  <script>
+
+    const ES = window.ES, e = ES.esc;
+    const COLORS = { Technical: "#2F5CFF", Cultural: "#8B5CF6", Sports: "#34d399", Workshops: "#f59e0b", Competitions: "#fb7185" };
+    const DOW = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+    const calMain = document.getElementById("calMain"), calSide = document.getElementById("calSide");
+    let view = "month", mineOnly = false, cat = "all";
+    const today = ES.toISO(new Date());
+    let cur = ES.parseDate(today); cur.setDate(1);
+    let selected = today;
+
+    // jump to the month of the next event if this month is empty
+    (function initMonth() {
+      const upcoming = ES.events.filter(x => ES.status(x) !== "ended").sort((a, b) => ES.startAt(a) - ES.startAt(b))[0];
+      const q = new URLSearchParams(location.search).get("date");
+      const target = q || (ES.events.some(x => x.date.slice(0, 7) === today.slice(0, 7)) ? null : upcoming && upcoming.date);
+      if (target) { cur = ES.parseDate(target); cur.setDate(1); selected = target; }
+    })();
+
+    function visibleEvents() {
+      let list = ES.events.slice();
+      if (cat !== "all") list = list.filter(x => x.category === cat);
+      if (mineOnly) { const ids = ES.myRecords().filter(r => r.status !== "none").map(r => r.eventId); list = list.filter(x => ids.indexOf(x.id) >= 0); }
+      return list.sort((a, b) => ES.startAt(a) - ES.startAt(b));
+    }
+
+    function legend() {
+      document.getElementById("calLegend").innerHTML =
+        `<button class="es-leg ${cat === "all" ? "on" : ""}" data-cat="all">All</button>` +
+        ES.CATEGORIES.map(c => `<button class="es-leg ${cat === c ? "on" : ""}" data-cat="${c}"><i style="background:${COLORS[c]}"></i>${c}</button>`).join("");
+      document.querySelectorAll(".es-leg").forEach(b => b.addEventListener("click", () => { cat = b.dataset.cat; draw(); }));
+    }
+
+    function chip(x) {
+      const mine = ES.myRecord(x.id);
+      return `<a class="es-chip" style="--c:${COLORS[x.category]}" href="event-details.html?id=${encodeURIComponent(x.id)}" title="${e(x.title)} · ${e(x.time)}">${mine ? "✓ " : ""}${e(x.title)}</a>`;
+    }
+
+    function drawMonth(list) {
+      const y = cur.getFullYear(), m = cur.getMonth();
+      const first = new Date(y, m, 1), days = new Date(y, m + 1, 0).getDate(), lead = first.getDay();
+      let cells = "";
+      for (let i = 0; i < lead; i++) cells += `<div class="es-day blank"></div>`;
+      for (let d = 1; d <= days; d++) {
+        const iso = y + "-" + ES.pad(m + 1) + "-" + ES.pad(d);
+        const evs = list.filter(x => x.date === iso);
+        cells += `<div class="es-day ${iso === today ? "today" : ""} ${iso === selected ? "sel" : ""} ${evs.length ? "has" : ""}" data-date="${iso}" tabindex="0" role="button" aria-label="${iso}, ${evs.length} events">
+          <span class="es-dnum">${d}</span>
+          <div class="es-chips">${evs.slice(0, 2).map(chip).join("")}${evs.length > 2 ? `<span class="es-more">+${evs.length - 2} more</span>` : ""}</div>
+          <div class="es-dots">${evs.map(x => `<i style="background:${COLORS[x.category]}"></i>`).join("")}</div>
+        </div>`;
+      }
+      calMain.innerHTML = `<div class="es-cal-grid">${DOW.map(d => `<div class="es-dow">${d}</div>`).join("")}${cells}</div>`;
+      calMain.querySelectorAll(".es-day[data-date]").forEach(c => {
+        const pick = (ev) => { if (ev.target.closest("a")) return; selected = c.dataset.date; draw(); };
+        c.addEventListener("click", pick);
+        c.addEventListener("keydown", (k) => { if (k.key === "Enter" || k.key === " ") { k.preventDefault(); pick(k); } });
+      });
+    }
+
+    function agendaItem(x) {
+      const rec = ES.myRecord(x.id);
+      return `<article class="es-agenda-item" style="--c:${COLORS[x.category]}">
+        <div class="es-agenda-date"><strong>${ES.parseDate(x.date).getDate()}</strong><span>${DOW[ES.parseDate(x.date).getDay()]}</span></div>
+        <div class="es-agenda-body"><h3><a href="event-details.html?id=${encodeURIComponent(x.id)}">${e(x.title)}</a></h3>
+          <p class="es-muted">${e(x.time)} – ${e(x.endTime)} · ${e(x.venue)} · ${e(x.category)}</p>
+          <div class="es-card-status">${ES.seatBadge(x)}${rec ? `<span class="es-badge es-badge-open">${rec.status === "waitlist" ? "Waitlisted" : "You're going"}</span>` : ""}</div></div>
+        <div class="es-agenda-actions"><a class="btn btn-ghost btn-small" target="_blank" rel="noopener" href="${e(ES.googleCalUrl(x))}">Google</a><button class="btn btn-ghost btn-small" data-ics="${e(x.id)}">.ics</button></div>
+      </article>`;
+    }
+
+    function drawAgenda(list) {
+      const y = cur.getFullYear(), m = cur.getMonth();
+      const inMonth = list.filter(x => { const d = ES.parseDate(x.date); return d.getFullYear() === y && d.getMonth() === m; });
+      calMain.innerHTML = inMonth.length ? `<div class="es-agenda">${inMonth.map(agendaItem).join("")}</div>` : `<div class="es-empty-sm">No events this month${cat !== "all" || mineOnly ? " for the current filters" : ""}.</div>`;
+    }
+
+    function drawSide(list) {
+      const evs = list.filter(x => x.date === selected);
+      calSide.innerHTML = `<h3>${ES.fmtDate(selected)}</h3>` + (evs.length ? evs.map(x => `<div class="es-side-ev" style="--c:${COLORS[x.category]}"><a href="event-details.html?id=${encodeURIComponent(x.id)}"><strong>${e(x.title)}</strong></a><span class="es-muted">${e(x.time)} – ${e(x.endTime)} · ${e(x.venue)}</span>${ES.seatBadge(x)}</div>`).join("") : `<p class="es-muted">No events on this day. Pick a highlighted date.</p>`);
+    }
+
+    function draw() {
+      const list = visibleEvents();
+      document.getElementById("calTitle").textContent = cur.toLocaleString("en-US", { month: "long", year: "numeric" });
+      legend();
+      if (view === "month") drawMonth(list); else drawAgenda(list);
+      drawSide(list);
+      calMain.querySelectorAll("[data-ics]").forEach(b => b.addEventListener("click", () => ES.downloadIcs([ES.getEvent(b.dataset.ics)], b.dataset.ics + ".ics")));
+    }
+
+    document.getElementById("calPrev").addEventListener("click", () => { cur.setMonth(cur.getMonth() - 1); draw(); });
+    document.getElementById("calNext").addEventListener("click", () => { cur.setMonth(cur.getMonth() + 1); draw(); });
+    document.getElementById("calToday").addEventListener("click", () => { cur = ES.parseDate(today); cur.setDate(1); selected = today; draw(); });
+    document.getElementById("mineOnly").addEventListener("change", (ev) => {
+      if (ev.target.checked && !ES.user()) { ev.target.checked = false; return ES.needLogin(); }
+      mineOnly = ev.target.checked; draw();
+    });
+    document.querySelectorAll(".es-seg button").forEach(b => b.addEventListener("click", () => {
+      view = b.dataset.view; document.querySelectorAll(".es-seg button").forEach(x => x.classList.toggle("active", x === b)); draw();
+    }));
+    document.getElementById("calIcs").addEventListener("click", () => {
+      const list = visibleEvents();
+      if (!list.length) return window.showToast("Nothing to export for the current filters.", "error");
+      ES.downloadIcs(list, "eventsphere-calendar.ics");
+    });
+    draw();
+
+  </script>
+</body>
+</html>
